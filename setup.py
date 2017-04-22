@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 import halma
 from halma.examples import available
 #Grab the README.md for the long description
-with open('README.rst', 'r') as f:
+with open('README.md', 'r') as f:
     long_description = f.read()
 
 

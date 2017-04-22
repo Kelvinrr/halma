@@ -65,9 +65,9 @@ class HalmaGUI(Frame):
 
 def main():
     root = Tk()
-    size = 8
+    size = 15
     gui = HalmaGUI(root, size)
-    board = Board(8,8)
+    board = Board(15,15)
     print(board.state)
     gui.set_board(board.state)
     root.mainloop()
