@@ -1,25 +1,29 @@
+from board import Board
 from tkinter import *
 
 class HalmaGUI(Frame):
     
-    def __init__(self, root, board_size, **options):
+    def __init__(self, root, board, **options):
         super().__init__(root)
         self.root = root
         self.pack(expand=YES,fill=BOTH)
         self._places = []
         self._banner = StringVar()
         self._banner.set("TESTING")
+        board_size = board.width
 
         upper_frame = Frame(self)
         banner = Label(upper_frame, text='', textvariable=self._banner, height=2, width=5, padx=30, bg="#FFFFFF")
         banner.pack(side=LEFT, expand=YES,fill=BOTH)
-        
+
+        piece_config = {'width': 5, 'height': 2, 'foreground': 'black', 'borderwidth': 1, 'relief': GROOVE}
+
         game_frame = Frame(self)
         for row in range(board_size):
             self._places.append([])
             for col in range(board_size):
                 backg = "#505050"
-                label = Label(game_frame, text='', bg=backg)
+                label = Label(game_frame, text='', bg=backg, **piece_config)
                 self._places[row].append(label)
                 label.grid(row=row,column=col, stick='nsew')
                 game_frame.columnconfigure(col,weight=1)
@@ -62,10 +66,14 @@ class HalmaGUI(Frame):
                 else:
                     widget.config(bg="#505050")
 
+    def set_banner(self, text):
+        self._banner.set(text)
+
 def main():
     root = Tk()
+    board = Board()
     size = 10
-    gui = HalmaGUI(root, size)
+    gui = HalmaGUI(root, board)
     board = [['' for x in range(size)] for y in range(size)]
     board[0][0] = 'g'
     board[4][4] = 'r'
