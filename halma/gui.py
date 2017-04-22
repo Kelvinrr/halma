@@ -1,9 +1,10 @@
 from tkinter import *
+from halma.board import Board
 
 boardColor = 20
 
 class HalmaGUI(Frame):
-    
+
     def __init__(self, root, board_size, **options):
         super().__init__(root)
         self.root = root
@@ -15,18 +16,19 @@ class HalmaGUI(Frame):
         upper_frame = Frame(self)
         banner = Label(upper_frame, text='', textvariable=self._banner, height=2, width=5, padx=30, bg="#FFFFFF")
         banner.pack(side=LEFT, expand=YES,fill=BOTH)
-        
+
         game_frame = Frame(self)
         for row in range(board_size):
             self._places.append([])
             for col in range(board_size):
-                backg = "#20" + str((row+3)*10) + str((col+3)*10)
+                # backg = "#20" + str((row+3)*10) + str((col+3)*10)
+                backg = "#444444"
                 label = Label(game_frame, text='', bg=backg)
                 self._places[row].append(label)
                 label.grid(row=row,column=col, stick='nsew')
                 game_frame.columnconfigure(col,weight=1)
             game_frame.rowconfigure(row,weight=1)
-            
+
         lower_frame = Frame(self)
 
         def handle_entry(event):
@@ -45,36 +47,34 @@ class HalmaGUI(Frame):
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=5)
         self.rowconfigure(2, weight=1)
-            
+
         self.columnconfigure(0, weight=1)
 
         upper_frame.grid(row=0,column=0,stick="nswe")
         game_frame.grid(row=1,column=0,stick="nswe")
         lower_frame.grid(row=2,column=0,stick="nswe")
-        
+
     def set_board(self, board):
-        print(board)
         for row in range(len(board)):
             for col in range(len(board)):
                 widget = self._places[row][col]
 
-                if board[row][col] == "g":
+                if board[row][col] == 'g':
                     widget.config(bg="#20FF20")
-                elif board[row][col] == "r":
+                elif board[row][col] == 'r':
                     widget.config(bg="#FF2020")
                 else:
                     widget.config(bg="#505050")
 
 def main():
     root = Tk()
-    size = 5
+    size = 8
     gui = HalmaGUI(root, size)
-    board = [['' for x in range(size)] for y in range(size)]
-    board[0][0] = 'g'
-    board[4][4] = 'r'
-    print(board)
-    gui.set_board(board)
+
+    board = Board(8,8)
+    print(board.state)
+    gui.set_board(board.state)
     root.mainloop()
-    
+
 if __name__ == "__main__":
     main()
