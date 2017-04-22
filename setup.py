@@ -1,25 +1,25 @@
 import os
 from setuptools import setup, find_packages
-import autocnet
-from autocnet.examples import available
+import halma
+from halma.examples import available
 #Grab the README.md for the long description
 with open('README.rst', 'r') as f:
     long_description = f.read()
 
 
-VERSION = autocnet.__version__
+VERSION = halma.__version__
 
 def setup_package():
     examples = set()
-    # for i in available():
-    #     if not os.path.isdir('plio/examples/' + i):
-    #         if '.' in i:
-    #             glob_name = 'examples/*.' + i.split('.')[-1]
-    #         else:
-    #             glob_name = 'examples/' + i
-    #     else:
-    #         glob_name = 'examples/' + i + '/*'
-    #     examples.add(glob_name)
+    for i in available():
+        if not os.path.isdir('halma/examples/' + i):
+            if '.' in i:
+                glob_name = 'examples/*.' + i.split('.')[-1]
+            else:
+                glob_name = 'examples/' + i
+        else:
+            glob_name = 'examples/' + i + '/*'
+        examples.add(glob_name)
 
     setup(
         name = "halma",
