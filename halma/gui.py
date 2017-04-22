@@ -1,10 +1,9 @@
 from board import Board
 from tkinter import *
-from halma.board import Board
 
 class HalmaGUI(Frame):
 
-    def __init__(self, root, board_size, **options):
+    def __init__(self, root, board, **options):
         super().__init__(root)
         self.root = root
         self.pack(expand=YES,fill=BOTH)
@@ -77,7 +76,6 @@ def main():
     gui = HalmaGUI(root, board)
     print(board.state)
     gui.set_board(board.state)
->>>>>>> a0a29b8142290e939346b4ce1ef3b74b58c80872
     root.mainloop()
 
 if __name__ == "__main__":
