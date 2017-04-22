@@ -7,5 +7,5 @@ import tkinter
 class TestBoard(unittest.TestCase):
     def setUp(self):
         pass
-    def test_compute_image(self):
+    def test_board_layout(self):
         pass
