@@ -1,1 +1,3 @@
 # halma
+
+Bullshit AI project
