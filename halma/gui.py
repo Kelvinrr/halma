@@ -1,9 +1,10 @@
 from board import Board
 from tkinter import *
+from halma.board import Board
 
 class HalmaGUI(Frame):
-    
-    def __init__(self, root, board, **options):
+
+    def __init__(self, root, board_size, **options):
         super().__init__(root)
         self.root = root
         self.pack(expand=YES,fill=BOTH)
@@ -17,7 +18,7 @@ class HalmaGUI(Frame):
         banner.pack(side=LEFT, expand=YES,fill=BOTH)
 
         piece_config = {'width': 5, 'height': 2, 'foreground': 'black', 'borderwidth': 1, 'relief': GROOVE}
-
+        
         game_frame = Frame(self)
         for row in range(board_size):
             self._places.append([])
@@ -28,7 +29,7 @@ class HalmaGUI(Frame):
                 label.grid(row=row,column=col, stick='nsew')
                 game_frame.columnconfigure(col,weight=1)
             game_frame.rowconfigure(row,weight=1)
-            
+
         lower_frame = Frame(self)
 
         def handle_entry(event):
@@ -47,21 +48,21 @@ class HalmaGUI(Frame):
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=5)
         self.rowconfigure(2, weight=1)
-            
+
         self.columnconfigure(0, weight=1)
 
         upper_frame.grid(row=0,column=0,stick="nswe")
         game_frame.grid(row=1,column=0,stick="nswe")
         lower_frame.grid(row=2,column=0,stick="nswe")
-        
+
     def set_board(self, board):
         for row in range(len(board)):
             for col in range(len(board)):
                 widget = self._places[row][col]
 
-                if board[row][col] == "g":
+                if board[row][col] == 'g':
                     widget.config(bg="#20FF20")
-                elif board[row][col] == "r":
+                elif board[row][col] == 'r':
                     widget.config(bg="#FF2020")
                 else:
                     widget.config(bg="#505050")
@@ -71,14 +72,13 @@ class HalmaGUI(Frame):
 
 def main():
     root = Tk()
-    board = Board()
-    size = 10
+    size = 15
+    board = Board(15,15)
     gui = HalmaGUI(root, board)
-    board = [['' for x in range(size)] for y in range(size)]
-    board[0][0] = 'g'
-    board[4][4] = 'r'
-    gui.set_board(board)
+    print(board.state)
+    gui.set_board(board.state)
+>>>>>>> a0a29b8142290e939346b4ce1ef3b74b58c80872
     root.mainloop()
-    
+
 if __name__ == "__main__":
     main()
