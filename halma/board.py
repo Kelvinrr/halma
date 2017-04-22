@@ -1,5 +1,3 @@
-# Edit this or whatever
-
 class Board(object):
 
     def __init__(self, w, h):
@@ -8,7 +6,7 @@ class Board(object):
         if w != h:
             raise Exception("Width and height must be equal, got: ", w, h)
 
-        pieces = 5 if w == 5 else 6
+        pieces = 5 if w == 8 else 6
 
         self.width = w
         self.height = h
