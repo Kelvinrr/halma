@@ -51,7 +51,6 @@ install:
   # Development installation
   - conda install pytest pytest-cov coverage sh anaconda-client
   - pip install coveralls
-  - python runipynbs.py
 
     # Straight from the menpo team
   - if [["$TRAVIS_OS_NAME" == "osx"]]; then
@@ -60,7 +59,7 @@ install:
       wget https://raw.githubusercontent.com/menpo/condaci/v0.4.8/condaci.py -O condaci.py;
     fi
     # Build autocnet and push to anaconda cloud
-  - python condaci.py setup
+  # - python condaci.py setup
 
 script:
   - pytest --cov=halma
@@ -69,12 +68,12 @@ script:
 
 after_success:
   # Upload to anaconda and push to coveralls
-  - ~/miniconda/bin/python condaci.py build ./conda
-  - coveralls
+  # - ~/miniconda/bin/python condaci.py build ./conda
+  # - coveralls
 
 notifications:
   webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/6cbe4b65fff6764ed80f
-    on_success: always
-    on_failure: always
+    # urls:
+      # - https://webhooks.gitter.im/e/6cbe4b65fff6764ed80f
+    # on_success: always
+    # on_failure: always

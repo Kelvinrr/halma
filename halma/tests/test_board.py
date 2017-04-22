@@ -1,16 +1,10 @@
-# Rename this to whatever
-import tkinter
-
 import unittest
 from unittest.mock import Mock
 from unittest.mock import MagicMock
 
-import ogr
-import pandas as pd
-from plio.io import io_gdal
+import tkinter
 
-class TestEdge(unittest.TestCase):
-
+class TestBoard(unittest.TestCase):
     def setUp(self):
         pass
     def test_compute_image(self):
