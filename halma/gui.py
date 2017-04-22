@@ -1,8 +1,6 @@
 from tkinter import *
 from halma.board import Board
 
-boardColor = 20
-
 class HalmaGUI(Frame):
 
     def __init__(self, root, board_size, **options):
@@ -21,8 +19,7 @@ class HalmaGUI(Frame):
         for row in range(board_size):
             self._places.append([])
             for col in range(board_size):
-                # backg = "#20" + str((row+3)*10) + str((col+3)*10)
-                backg = "#444444"
+                backg = "#505050"
                 label = Label(game_frame, text='', bg=backg)
                 self._places[row].append(label)
                 label.grid(row=row,column=col, stick='nsew')
@@ -70,7 +67,6 @@ def main():
     root = Tk()
     size = 8
     gui = HalmaGUI(root, size)
-
     board = Board(8,8)
     print(board.state)
     gui.set_board(board.state)
