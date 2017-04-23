@@ -25,7 +25,6 @@ class Halma(object):
         dst = self.board.coordToXY(dst)
         self.board.move(src, dst)
 
-
 if __name__ == "__main__":
     game = Halma(15)
     print(game.current_turn)
