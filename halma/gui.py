@@ -44,7 +44,9 @@ class HalmaGUI(Frame):
                 label = (board.xyToCoord(x,y), event.widget)
                 if self._cur_move:
                     cmd = self._cur_move[0] + "->" + label[0]
-                    game.run_command(cmd)
+                    report = game.run_command(cmd)
+                    print(report)
+                    self.set_banner(report)
                     self.set_board(game.board)
                     self._cur_move[1].config(state=NORMAL)
                     self._cur_move = None
