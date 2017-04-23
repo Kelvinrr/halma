@@ -45,8 +45,9 @@ class HalmaGUI(Frame):
                 if self._cur_move:
                     cmd = self._cur_move[0] + "->" + label[0]
                     print(cmd)
-                    self.set_board(game.board)
                     game.run_command(cmd)
+                    self.set_board(game.board)
+                    print(game.board)
                     self._cur_move[1].config(state=NORMAL)
                     self._cur_move = None
                 else:
@@ -126,7 +127,7 @@ class HalmaGUI(Frame):
 
 def main():
     root = Tk()
-    size = 15
+    size = 4
     game = Halma(size)
     board = game.board
     gui = HalmaGUI(root, game)

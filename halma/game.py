@@ -17,7 +17,8 @@ class Halma(object):
         src, dst = cmd.split("->")
         src = self.board.coordToXY(src)
         dst = self.board.coordToXY(dst)
-        self.board.move(src, dst)
+        print(src, dst)
+        self.board.move(dst, src)
 
 
 if __name__ == "__main__":

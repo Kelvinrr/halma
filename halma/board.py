@@ -51,6 +51,12 @@ class Board(object):
             return False
 
     def move(self, destination, location):
+        if location in self.red_positions:
+            self.red_positions.remove(location)
+            self.red_positions.add(destination)
+        if location in self.green_positions:
+            self.green_positions.remove(location)
+            self.green_positions.add(destination)
         self.state[destination[0]][destination[1]] = self.state[location[0]][location[1]]
         self.state[location[0]][location[1]] = "o"
 
@@ -94,7 +100,7 @@ class Board(object):
 
     def coordToXY(self, coord):
         coord = coord.strip().lower()
-        return (ord(coord[0])-97, int(coord[1]))
+        return (ord(coord[0])-97, self.size - int(coord[1]))
 
 if __name__ == "__main__":
     board = Board(16)
