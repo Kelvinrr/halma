@@ -12,7 +12,7 @@ class Board(object):
         self.size = size
         self.red_start = set()
         self.green_start = set()
-        
+
         self.green_change = set()
         self.red_change = set()
 
@@ -21,13 +21,13 @@ class Board(object):
             row_len = i + pieces
             for j in range(row_len):
                 self.state[i][j] = 'r'
-                self.green_start.add((i, j))
+                self.red_start.add((size + i, j))
 
         for i in range(-pieces+1,0):
             row_len = i + pieces
             for j in range(row_len):
                 self.state[j][i] = 'g'
-                self.red_start.add((i, j))
+                self.green_start.add((j, size + i))
 
         self.red_positions = self.red_start.copy()
         self.green_positions = self.green_start.copy()
@@ -88,13 +88,14 @@ class Board(object):
         print(adj_pos)
         return adj_pos
 
-    def xyToCoord(self, x,y):
-        return chr(y + 97) + str(self.size - x)
-
-    def coordToXY(self, coord):
-        coord = coord.strip().lower()
-        return (ord(coord[0])-97, int(coord[1]))
-
 board = Board(16)
 print(board)
 print(len(board.green_positions))
+print(board.green_positions)
+print(board.red_positions)
+
+
+arr = [['o' for x in range(16)] for y in range(16)]
+for pos in board.green_positions:
+    arr[pos[0]][pos[1]] = 'g'
+print(arr)
