@@ -49,6 +49,8 @@ class Board(object):
             return False
 
     def move(self, destination, location):
+        if not self.is_valid(destination, location):
+            return False
 
         if location in self.red_positions:
             self.red_positions.remove(location)
@@ -75,19 +77,15 @@ class Board(object):
         return adj_pos
 
     def is_valid(self, destination, location):
-
         adj_positions = self.get_coordinates(location[0], location[1])
-
+        print((self.red_positions or self.green_positions))
         if(destination in (self.red_positions or self.green_positions)):
-            print("Invalid Move", destination)
-            return
+            return False
 
         if (destination in adj_positions):
-            self.move(destination, location)
-            return adj_positions
+            return True
 
         else:
-            print("Invalid Move")
             return False
 
 

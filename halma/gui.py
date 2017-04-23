@@ -6,6 +6,7 @@ class HalmaGUI(Frame):
 
     def __init__(self, root, game, **options):
         super().__init__(root)
+        self.game = game
         self.root = root
         self.pack(expand=YES,fill=BOTH)
         self._places = []
@@ -78,10 +79,10 @@ class HalmaGUI(Frame):
 
         def handle_command(cmd):
             print(cmd)
-            report = game.run_command(cmd)
+            report = self.game.run_command(cmd)
             print(report)
             self.set_banner(report)
-            self.set_board(game.board)
+            self.set_board(self.game.board)
 
 
         entry = Entry(lower_frame)

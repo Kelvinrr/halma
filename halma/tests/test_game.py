@@ -14,5 +14,5 @@ class TestGame(unittest.TestCase):
         self.game = game.Halma(5)
 
     def test_run_command(self):
-        assert self.game.run_command("a1->b2") == "Invalid Command"
-        assert(False)
+        assert self.game.run_command("a1->b2") == "Move Successful"
+        assert self.game.run_command("a1->b2") == "Invalid Move"

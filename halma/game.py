@@ -29,9 +29,11 @@ class Halma(object):
         dst = self.board.coordToXY(dst)
 
         if self.current_turn == 'g' and src in self.board.green_positions:
-            self.board.move(dst, src)
+            if not self.board.move(dst, src):
+                return "Invalid Move"
         elif self.current_turn == 'r' and src in self.board.red_positions:
-            self.board.move(dst, src)
+            if not self.board.move(dst, src):
+                return "Invalid Move"
         else:
             return "Invalid Move"
 
