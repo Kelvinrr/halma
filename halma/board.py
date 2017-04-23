@@ -54,10 +54,6 @@ class Board(object):
         self.state[destination[0]][destination[1]] = self.state[location[0]][location[1]]
         self.state[location[0]][location[1]] = "o"
 
-    def moveGen(self, currentRed, currentGreen):
-        self.currentR = currentRed
-        self.currentG = currentGreen
-
         # Returns the coordinates of each adjacent valid spot to move
         def get_coordinates(self, x, y):
 
