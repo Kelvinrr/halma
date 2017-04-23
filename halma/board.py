@@ -50,9 +50,9 @@ class Board(object):
         else:
             return False
 
-    def move(self, destination, location):
-        self.state[destination[0]][destination[1]] = self.state[location[0]][location[1]]
-        self.state[location[0]][location[1]] = "o"
+        def move(self, destination, location):
+            self.state[destination[0]][destination[1]] = self.state[location[0]][location[1]]
+            self.state[location[0]][location[1]] = "o"
 
         # Returns the coordinates of each adjacent valid spot to move
         def get_coordinates(self, x, y):
