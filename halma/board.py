@@ -12,6 +12,9 @@ class Board(object):
         self.size = size
         self.red_start = set()
         self.green_start = set()
+        
+        self.green_change = set()
+        self.red_change = set()
 
         pieces = size//2 + 1
         for i in range(-pieces+1,0):
