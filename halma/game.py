@@ -1,9 +1,7 @@
 from tkinter import *
-import re
 
 import random
-
-from board import Board
+from halma.board import Board
 
 class Halma(object):
     def __init__(self, size):
@@ -44,6 +42,6 @@ class Halma(object):
             return 'The winner is: {}'.format("Red" if self.winner == 'r' else 'Green')
         return "Move Successful"
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     game = Halma(15)
     print(game.current_turn)
