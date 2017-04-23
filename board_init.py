@@ -37,16 +37,16 @@ class Board(object):
         self.startG = startG
         self.startR = startR
 
-        if(startG == startR):
+        if(startG[1:] == startR[:-1]):
             print("Green is the winner!")
             return True
 
-        elif(startR == startG):
+        elif(startR[1:] == startG[:-1]):
             print("Red is the winner!")
             return True
 
         else:
-            print("No one has won yet")
+            print("No one has one yet")
             return False
 
     def moveGen(self, currentR, currentG):
