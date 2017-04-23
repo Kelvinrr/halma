@@ -56,6 +56,7 @@ class Board(object):
         # Height / Width of board
         row_length = self.width
         col_length = self.height
+        
     def moveGen(self, currentR, currentG):
         self.currentR = currentR
         self.currentG = currentG
@@ -85,17 +86,24 @@ class Board(object):
 
         adj_pos = []
 
-        print(adj_pos)
         return adj_pos
 
-board = Board(16)
-print(board)
-print(len(board.green_positions))
-print(board.green_positions)
-print(board.red_positions)
+    def xyToCoord(self, x,y):
+        return chr(y + 97) + str(self.size - x)
+
+    def coordToXY(self, coord):
+        coord = coord.strip().lower()
+        return (ord(coord[0])-97, int(coord[1]))
+if __name__ == "__main__":
+    board = Board(16)
+    print(board)
+    print(len(board.green_positions))
+    print(board.green_positions)
+    print(board.red_positions)
 
 
-arr = [['o' for x in range(16)] for y in range(16)]
-for pos in board.green_positions:
-    arr[pos[0]][pos[1]] = 'g'
-print(arr)
+    arr = [['o' for x in range(16)] for y in range(16)]
+    for pos in board.green_positions:
+        arr[pos[0]][pos[1]] = 'g'
+    print(arr)
+
