@@ -103,9 +103,10 @@ class HalmaGUI(Frame):
 def main():
     root = Tk()
     size = 15
-    board = Board(15,15)
+    board = Board(15)
     gui = HalmaGUI(root, board)
     gui.set_board(board.state)
+    print(board.coordToXY("G6"))
     root.mainloop()
 
 if __name__ == "__main__":

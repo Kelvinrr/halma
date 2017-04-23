@@ -63,10 +63,10 @@ class Board(object):
 
             adj_pos = []
 
-    def xyToCoord(x,y):
+    def xyToCoord(self, x,y):
         return chr(y + 97) + str(self.size - x)
 
-    def coordToXY(coord):
+    def coordToXY(self, coord):
         coord = coord.strip().lower()
         return (ord(coord[0])-97, int(coord[1]))
 
