@@ -100,10 +100,3 @@ class Board(object):
     def coordToXY(self, coord):
         coord = coord.strip().lower()
         return (ord(coord[0])-97, self.size - int(coord[1]))
-
-if __name__ == "__main__": # pragma: no cover
-    board = Board(16)
-    print(board)
-    print(len(board.green_positions))
-    print(board.green_positions)
-    print(board.red_positions)

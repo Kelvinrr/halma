@@ -1,8 +1,11 @@
-from board import Board
-from game import Halma
+import sys
+import os
+
+from halma.board import Board
+from halma.game import Halma
 from tkinter import *
 
-class HalmaGUI(Frame):
+class HalmaGUI(Frame): # pragma: no cover
 
     def __init__(self, root, game, **options):
         super().__init__(root)
@@ -127,16 +130,3 @@ class HalmaGUI(Frame):
 
     def set_banner(self, text):
         self._banner.set(text)
-
-
-def main():
-    root = Tk()
-    size = 5
-    game = Halma(size)
-    board = game.board
-    gui = HalmaGUI(root, game)
-    gui.set_board(board)
-    root.mainloop()
-
-if __name__ == "__main__":
-    main()

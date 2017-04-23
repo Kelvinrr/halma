@@ -4,13 +4,13 @@ import sys
 import os
 import pytest
 
-sys.path.insert(0, os.path.abspath('..'))
+from .. import board
 
-from ..board import Board
-
+Board = board.Board
 class TestBoard(unittest.TestCase):
 
     def setUp(self):
+
         self.board = Board(5)
 
 
