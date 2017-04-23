@@ -47,7 +47,6 @@ class HalmaGUI(Frame):
                     print(cmd)
                     game.run_command(cmd)
                     self.set_board(game.board)
-                    print(game.board)
                     self._cur_move[1].config(state=NORMAL)
                     self._cur_move = None
                 else:

@@ -30,8 +30,9 @@ class Halma(object):
             print("Invalid Move")
             return
 
-        self.winner = self.board.winCheck()
+        print(self.current_turn)
         self.current_turn = 'r' if self.current_turn == 'g' else 'g'
+        self.winner = self.board.winCheck()
         if self.winner:
             print('The winner is: {}'.format("Red" if self.winner == 'r' else 'Green'))
 
