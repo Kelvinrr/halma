@@ -59,11 +59,11 @@ class HalmaGUI(Frame):
             for col in range(board_size):
                 backg = "#505050"
                 label = Label(piece_frame, text='', bg=backg, **piece_config)
-                label.bind("<Button-1>", handle_label(row, col))
+                label.bind("<Button-1>", handle_label(col, row))
                 self._places[row].append(label)
                 label.grid(row=row,column=col, stick='nsew')
                 piece_frame.columnconfigure(col,weight=1)
-            piece_frame.rowconfigure(row,weight=1)
+                piece_frame.rowconfigure(row,weight=1)
 
         lower_frame = Frame(self)
 
@@ -77,6 +77,7 @@ class HalmaGUI(Frame):
             exit(0)
 
         def handle_command(cmd):
+            print(cmd)
             report = game.run_command(cmd)
             print(report)
             self.set_banner(report)

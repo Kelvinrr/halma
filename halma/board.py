@@ -48,7 +48,8 @@ class Board(object):
         else:
             return False
 
-    def move(self, destination, location): # pragma: no cover
+    def move(self, destination, location):
+
         if location in self.red_positions:
             self.red_positions.remove(location)
             self.red_positions.add(destination)
@@ -56,40 +57,39 @@ class Board(object):
             self.green_positions.remove(location)
             self.green_positions.add(destination)
 
-        # Returns the coordinates of each adjacent valid spot to move
-        def get_coordinates(self, x, y):
+    # Returns the coordinates of each adjacent valid spot to move
+    def get_coordinates(self, x, y):
 
-            # Height / Width of board
-            row_length = self.width
-            col_length = self.height
-            adj_pos = []
+        adj_pos = []
+        row_length = self.size
+        col_length = self.size
 
-            def is_valid(self, destination, location):
-
-
-                # Generates the possible moves through Cartesian Product
-                for i in range(-1, 2):
-                    for j in range(-1, 2):
-                        if i == 0 and j == 0:
-                            continue
-                        else:
-                            if is_valid(y + i, x + j):
-                                adj_pos.append((y + i, x + j))
-
-                if (destination not in (self.green_positions or self.red_positions)):
-                    raise Exception("Destination is not a valid move")
-
-                if x >= 0 and y >= 0 and x < col_length and y < row_length:
-                    return True
-
-                if (location in adj_pos):
-                    self.move(self, destination, location)
-                    return True
-
+        # Height / Width of board
+        for i in range(-1, 2):
+            for j in range(-1, 2):
+                if i == 0 and j == 0:
+                    continue
                 else:
-                    return False
+                    if (x + i >= 0 and y + j >= 0) and ((x + i) < col_length and (y + j) < row_length) and ((x + i, y + j) not in (self.red_positions and self.green_positions)):
+                        adj_pos.append((x + i, y + j))
+        return adj_pos
 
-            return adj_pos
+    def is_valid(self, destination, location):
+
+        adj_positions = self.get_coordinates(location[0], location[1])
+
+        if(destination in (self.red_positions or self.green_positions)):
+            print("Invalid Move", destination)
+            return
+
+        if (destination in adj_positions):
+            self.move(destination, location)
+            return adj_positions
+
+        else:
+            print("Invalid Move")
+            return False
+
 
     def xyToCoord(self, x,y):
         if (x,y) >= (self.size, self.size) or (x,y) < (0,0):
