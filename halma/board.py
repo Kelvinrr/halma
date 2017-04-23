@@ -1,52 +1,51 @@
+from copy import copy
+
 class Board(object):
 
     def __init__(self, w, h):
-        self.state = [['x' for x in range(w)] for y in range(h)]
+        self.state = [['o' for x in range(w)] for y in range(h)]
 
-        if w != h or isinstance(w, int):
+        if w != h:
             raise Exception("Width and height must be equal, got: ", w, h)
+        elif not isinstance(w, int) or not isinstance(h, int):
+            raise Exception("Width and height must both be integers, got: {} {}"
+                            .format(type(w), type(h)))
 
-        pieces = w//2
+        pieces = w//2 + 1
 
         self.width = w
         self.height = h
 
-
-        startG = []
-        startR = []
+        self.red_start = set()
+        self.green_start = set()
 
         for i in range(-pieces+1,0):
             row_len = i + pieces
             for j in range(row_len):
                 self.state[i][j] = 'r'
-                startG.append((i, j))
+                self.green_start.add((i, j))
 
         for i in range(-pieces+1,0):
             row_len = i + pieces
             for j in range(row_len):
                 self.state[j][i] = 'g'
-                startR.append((i, j))
+                self.red_start.add((i, j))
 
+        self.red_positions = self.red_start.copy()
+        self.green_positions = self.green_start.copy()
+
+    def __str__(self):
+        string = ''
         for c in range(len(self.state)):
-            print(self.state[c])
-
+            string = string + str(self.state[c]) + '\n'
+        return string
 
     def winCheck(self, state, startG, startR):
-
-        self.state = state
-        self.startG = startG
-        self.startR = startR
-
-        if(startG == startR):
-            print("Green is the winner!")
-            return True
-
-        elif(startR == startG):
-            print("Red is the winner!")
-            return True
-
+        if(self.green_posisitions == self.red_start):
+            return 'r'
+        elif(self.red_positions == self.green_start):
+            return 'g'
         else:
-            print("No one has one yet")
             return False
 
     def moveGen(self, currentR, currentG):
@@ -70,6 +69,6 @@ class Board(object):
 
             adj_pos = []
 
-
-
-board = Board(10, 10)
+board = Board(16, 16)
+print(board)
+print(len(board.green_positions))
