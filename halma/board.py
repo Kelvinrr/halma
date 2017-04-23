@@ -3,7 +3,7 @@ from copy import copy
 class Board(object):
 
     def __init__(self, size):
-        self.state = [['o' for x in range(w)] for y in range(h)]
+        self.state = [['o' for x in range(size)] for y in range(size)]
 
         if not isinstance(size, int):
             raise Exception("Width and height must both be integers, got: {} {}"
@@ -13,7 +13,7 @@ class Board(object):
         self.red_start = set()
         self.green_start = set()
 
-        pieces = w//2 + 1
+        pieces = size//2 + 1
         for i in range(-pieces+1,0):
             row_len = i + pieces
             for j in range(row_len):
@@ -63,6 +63,14 @@ class Board(object):
 
             adj_pos = []
 
-board = Board(16, 16)
+    def xyToCoord(x,y):
+        return chr(y + 97) + str(self.size - x)
+
+    def coordToXY(coord):
+        coord = coord.strip().lower()
+        return (ord(coord[0])-97, int(coord[1]))
+
+
+board = Board(16)
 print(board)
 print(len(board.green_positions))
