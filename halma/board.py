@@ -88,6 +88,15 @@ class Board(object):
         print(adj_pos)
         return adj_pos
 
+    def xyToCoord(self, x,y):
+        return chr(y + 97) + str(self.size - x)
+
+    def coordToXY(self, coord):
+        coord = coord.strip().lower()
+        return (ord(coord[0])-97, int(coord[1]))
+
+
+
 board = Board(16)
 print(board)
 print(len(board.green_positions))
