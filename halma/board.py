@@ -58,6 +58,7 @@ class Board(object):
         if location in self.green_positions:
             self.green_positions.remove(location)
             self.green_positions.add(destination)
+        return True
 
     # Returns the coordinates of each adjacent valid spot to move
     def get_coordinates(self, x, y):

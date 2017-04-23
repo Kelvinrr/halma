@@ -38,10 +38,11 @@ class Halma(object):
             return "Invalid Move"
 
         self.current_turn = 'r' if self.current_turn == 'g' else 'g'
+        
         self.winner = self.board.winCheck()
         if self.winner:
             return 'The winner is: {}'.format("Red" if self.winner == 'r' else 'Green')
-        return "Move Successful"
+        return "{}'s Turn".format('Red' if self.current_turn == 'r' else 'Green')
 
 if __name__ == "__main__": # pragma: no cover
     game = Halma(15)
