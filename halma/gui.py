@@ -34,7 +34,59 @@ class HalmaGUI(Frame):
             label.grid(row=0, column=col+1, stick='nsew')
             game_frame.columnconfigure(col+1, weight=1)
 
+
         piece_frame.grid(row=1,column=1,rowspan=board_size,columnspan=board_size, stick='nsew')
+
+        def handle_label(x,y):
+            def _handle_label(event):
+                label = board.xyToCoord(x,y)
+                if self._cur_move:
+                    print(self._cur_move + "->" + label)
+                    self._cur_move = ""
+                else:
+                    self._cur_move = label
+
+            return _handle_label
+                
+                
+        for row in range(board_size):
+            self._places.append([])
+            for col in range(board_size):
+                backg = "#505050"
+                label = Label(piece_frame, text='', bg=backg, **piece_config)
+                label.bind("<Button-1>", handle_label(row, col))
+                self._places[row].append(label)
+                label.grid(row=row,column=col, stick='nsew')
+                piece_frame.columnconfigure(col,weight=1)
+            piece_frame.rowconfigure(row,weight=1)
+
+        lower_frame = Frame(self)
+
+        def handle_entry(event):
+            if event.widget.get():
+                print(event.widget.get())
+                event.widget.delete(0,END)
+
+        def quit_command():
+            exit(0)
+        
+        entry = Entry(lower_frame)
+        entry.pack(side=TOP, expand=YES,fill=X)
+        entry.bind("<Return>", handle_entry)
+        qButton = Button(lower_frame, text="quit", command=quit_command)
+        qButton.pack(side=TOP, expand=YES)
+
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(1, weight=5)
+        self.rowconfigure(2, weight=1)
+
+        self.columnconfigure(0, weight=1)
+
+        upper_frame.grid(row=0,column=0,stick="nswe")
+        game_frame.grid(row=1,column=0,stick="nswe")
+        lower_frame.grid(row=2,column=0,stick="nswe")
+        self.set_board(board)
+        
 
         def handle_label(x,y):
             def _handle_label(event):
@@ -86,6 +138,17 @@ class HalmaGUI(Frame):
         lower_frame.grid(row=2,column=0,stick="nswe")
 
     def set_board(self, board):
+        for row in range(board.size):
+            for col in range(board.size):
+                widget = self._places[row][col]
+                if (col,row) in board.green_positions:
+                    widget.config(bg="#20FF20")
+                elif (col, row) in board.red_positions:
+                    widget.config(bg="#FF2020")
+                else:
+                    widget.config(bg="#505050")
+                    
+    def update_board(self, board):
         for row in range(len(board)):
             for col in range(len(board)):
                 widget = self._places[row][col]
@@ -99,14 +162,14 @@ class HalmaGUI(Frame):
 
     def set_banner(self, text):
         self._banner.set(text)
+        
 
 def main():
     root = Tk()
     size = 15
     board = Board(15)
     gui = HalmaGUI(root, board)
-    gui.set_board(board.state)
-    print(board.coordToXY("G6"))
+    gui.set_board(board)
     root.mainloop()
 
 if __name__ == "__main__":
