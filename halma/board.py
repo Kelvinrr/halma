@@ -107,8 +107,3 @@ if __name__ == "__main__": # pragma: no cover
     print(len(board.green_positions))
     print(board.green_positions)
     print(board.red_positions)
-
-    # arr = [['o' for x in range(16)] for y in range(16)]
-    # for pos in board.green_positions:
-    #     arr[pos[0]][pos[1]] = 'g'
-    # print(arr)
