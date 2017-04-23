@@ -8,14 +8,14 @@ class Halma(object):
         self.board = Board(size)
         self.winner = None
         self.current_turn = 'g'
-        self.regExp = re.compile('[a-z]{1}\d{1}->\[a-z]{1}\d{1}')
+        self.regExp = re.compile('[a-z]{1}\d{1}->[a-z]{1}\d{1}')
 
     def run_command(self, cmd):
         """
         commands must be in the format "b6->c7"
         """
         if not cmd:
-            return 'Invalid Command'
+            return 'Empty Command'
 
         cmd = cmd.strip().lower()
 
@@ -35,7 +35,6 @@ class Halma(object):
         else:
             return "Invalid Move"
 
-        print(self.current_turn)
         self.current_turn = 'r' if self.current_turn == 'g' else 'g'
         self.winner = self.board.winCheck()
         if self.winner:
