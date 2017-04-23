@@ -3,10 +3,10 @@ class Board(object):
     def __init__(self, w, h):
         self.state = [['x' for x in range(w)] for y in range(h)]
 
-        if w != h or isinstance(w, int):
+        if w != h:
             raise Exception("Width and height must be equal, got: ", w, h)
 
-        pieces = w//2
+        pieces = 5 if w == 8 else 6
 
         self.width = w
         self.height = h
@@ -46,7 +46,7 @@ class Board(object):
             return True
 
         else:
-            print("No one has one yet")
+            print("No one has won yet")
             return False
 
     def moveGen(self, currentR, currentG):

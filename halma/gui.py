@@ -1,26 +1,29 @@
+from board import Board
 from tkinter import *
-from halma.board import Board
 
 class HalmaGUI(Frame):
 
-    def __init__(self, root, board_size, **options):
+    def __init__(self, root, board, **options):
         super().__init__(root)
         self.root = root
         self.pack(expand=YES,fill=BOTH)
         self._places = []
         self._banner = StringVar()
         self._banner.set("TESTING")
+        board_size = board.width
 
         upper_frame = Frame(self)
         banner = Label(upper_frame, text='', textvariable=self._banner, height=2, width=5, padx=30, bg="#FFFFFF")
         banner.pack(side=LEFT, expand=YES,fill=BOTH)
 
+        piece_config = {'width': 5, 'height': 2, 'foreground': 'black', 'borderwidth': 1, 'relief': GROOVE}
+        
         game_frame = Frame(self)
         for row in range(board_size):
             self._places.append([])
             for col in range(board_size):
                 backg = "#505050"
-                label = Label(game_frame, text='', bg=backg)
+                label = Label(game_frame, text='', bg=backg, **piece_config)
                 self._places[row].append(label)
                 label.grid(row=row,column=col, stick='nsew')
                 game_frame.columnconfigure(col,weight=1)
@@ -63,11 +66,14 @@ class HalmaGUI(Frame):
                 else:
                     widget.config(bg="#505050")
 
+    def set_banner(self, text):
+        self._banner.set(text)
+
 def main():
     root = Tk()
     size = 15
-    gui = HalmaGUI(root, size)
     board = Board(15,15)
+    gui = HalmaGUI(root, board)
     print(board.state)
     gui.set_board(board.state)
     root.mainloop()
