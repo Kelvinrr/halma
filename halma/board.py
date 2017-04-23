@@ -44,7 +44,6 @@ class Board(object):
             return False
 
     def moveGen(self, currentR, currentG):
-
         self.currentR = currentR
         self.currentG = currentG
 
