@@ -2,23 +2,18 @@ from copy import copy
 
 class Board(object):
 
-    def __init__(self, w, h):
-        self.state = [['o' for x in range(w)] for y in range(h)]
+    def __init__(self, size):
+        self.state = [['o' for x in range(size)] for y in range(size)]
 
-        if w != h:
-            raise Exception("Width and height must be equal, got: ", w, h)
-        elif not isinstance(w, int) or not isinstance(h, int):
+        if not isinstance(size, int):
             raise Exception("Width and height must both be integers, got: {} {}"
                             .format(type(w), type(h)))
 
-        pieces = w//2 + 1
-
-        self.width = w
-        self.height = h
-
+        self.size = size
         self.red_start = set()
         self.green_start = set()
 
+        pieces = size//2 + 1
         for i in range(-pieces+1,0):
             row_len = i + pieces
             for j in range(row_len):
@@ -52,12 +47,18 @@ class Board(object):
         else:
             return False
 
+<<<<<<< HEAD
     # Returns the coordinates of each adjacent valid spot to move
     def get_coordinates(self, x, y):
 
         # Height / Width of board
         row_length = self.width
         col_length = self.height
+=======
+    def moveGen(self, currentR, currentG):
+        self.currentR = currentR
+        self.currentG = currentG
+>>>>>>> 0776e6d1429695272d01fbbd4ab2941d26c16340
 
         def is_valid(destination, location):
 
@@ -88,7 +89,19 @@ class Board(object):
         return adj_pos
 
 
+<<<<<<< HEAD
 board = Board(4, 4)
 board.get_coordinates(board.green_positions, 16, 16)
+=======
+    def xyToCoord(self, x,y):
+        return chr(y + 97) + str(self.size - x)
+
+    def coordToXY(self, coord):
+        coord = coord.strip().lower()
+        return (ord(coord[0])-97, int(coord[1]))
+
+
+board = Board(16)
+>>>>>>> 0776e6d1429695272d01fbbd4ab2941d26c16340
 print(board)
 print(len(board.green_positions))
