@@ -47,18 +47,15 @@ class Board(object):
         else:
             return False
 
-<<<<<<< HEAD
     # Returns the coordinates of each adjacent valid spot to move
     def get_coordinates(self, x, y):
 
         # Height / Width of board
         row_length = self.width
         col_length = self.height
-=======
     def moveGen(self, currentR, currentG):
         self.currentR = currentR
         self.currentG = currentG
->>>>>>> 0776e6d1429695272d01fbbd4ab2941d26c16340
 
         def is_valid(destination, location):
 
@@ -89,10 +86,8 @@ class Board(object):
         return adj_pos
 
 
-<<<<<<< HEAD
 board = Board(4, 4)
 board.get_coordinates(board.green_positions, 16, 16)
-=======
     def xyToCoord(self, x,y):
         return chr(y + 97) + str(self.size - x)
 
@@ -102,6 +97,5 @@ board.get_coordinates(board.green_positions, 16, 16)
 
 
 board = Board(16)
->>>>>>> 0776e6d1429695272d01fbbd4ab2941d26c16340
 print(board)
 print(len(board.green_positions))
