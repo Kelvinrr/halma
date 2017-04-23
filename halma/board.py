@@ -40,35 +40,55 @@ class Board(object):
             string = string + str(self.state[c]) + '\n'
         return string
 
-    def winCheck(self, state, startG, startR):
-        if(self.green_posisitions == self.red_start):
+    def winCheck(self, green_start, red_start):
+
+        self.red_start = red_start
+        self.green_start = green_start
+
+        if(self.green_positions == self.red_start):
             return 'r'
         elif(self.red_positions == self.green_start):
             return 'g'
         else:
             return False
 
-    def moveGen(self, currentR, currentG):
+    # Returns the coordinates of each adjacent valid spot to move
+    def get_coordinates(self, x, y):
 
-        self.currentR = currentR
-        self.currentG = currentG
+        # Height / Width of board
+        row_length = self.width
+        col_length = self.height
 
-        # Returns the coordinates of each adjacent valid spot to move
-        def get_coordinates(board, x, y):
+        def is_valid(destination, location):
 
-            # Height / Width of board
-            row_length = len(board)
-            col_length = len(board[0])
+            # Generates the possible moves through Cartesian Product
+            for i in range(-1, 2):
+                for j in range(-1, 2):
+                    if i == 0 and j == 0:
+                        continue
+                    else:
+                        if is_valid(y + i, x + j):
+                            adj_pos.append((y + i, x + j))
 
-        def is_valid(w, h, col_length, row_length):
+            if(destination not in (self.green_positions or self.red_positions)):
+                raise Exception("Destination is not a valid move")
 
-            if w >= 0 and h >= 0 and w < col_length and h < row_length:
+            if x >= 0 and y >= 0 and x < col_length and y < row_length:
                 return True
+
+            if(location in adj_pos):
+                return True
+
             else:
                 return False
 
-            adj_pos = []
+        adj_pos = []
 
-board = Board(16, 16)
+        print(adj_pos)
+        return adj_pos
+
+
+board = Board(4, 4)
+board.get_coordinates(board.green_positions, 16, 16)
 print(board)
 print(len(board.green_positions))
