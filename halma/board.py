@@ -1,8 +1,6 @@
 
 class Board(object):
     def __init__(self, size):
-        self.state = [['o' for x in range(size)] for y in range(size)]
-
         if not isinstance(size, int):
             raise Exception("Width and height must both be integers, got: {} {}"
                             .format(type(size), type(size)))
@@ -18,13 +16,11 @@ class Board(object):
         for i in range(-pieces + 1, 0):
             row_len = i + pieces
             for j in range(row_len):
-                self.state[i][j] = 'r'
                 self.red_start.add((size + i, j))
 
         for i in range(-pieces + 1, 0):
             row_len = i + pieces
             for j in range(row_len):
-                self.state[j][i] = 'g'
                 self.green_start.add((j, size + i))
 
         self.red_positions = self.red_start.copy()
@@ -32,8 +28,16 @@ class Board(object):
 
     def __str__(self): # pragma: no cover
         string = ''
-        for c in range(len(self.state)):
-            string = string + str(self.state[c]) + '\n'
+        for y in range(self.size):
+            l = []
+            for x in range(self.size):
+                if (x,y) in self.red_positions:
+                    l.append('r')
+                elif (x,y) in self.green_positions:
+                    l.append('g')
+                else:
+                    l.append('-')
+            string += " ".join(l) + "\n"
         return string
 
     def winCheck(self):
@@ -51,8 +55,6 @@ class Board(object):
         if location in self.green_positions:
             self.green_positions.remove(location)
             self.green_positions.add(destination)
-        self.state[destination[0]][destination[1]] = self.state[location[0]][location[1]]
-        self.state[location[0]][location[1]] = "o"
 
         # Returns the coordinates of each adjacent valid spot to move
         def get_coordinates(self, x, y):
