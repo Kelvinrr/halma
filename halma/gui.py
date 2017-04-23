@@ -44,10 +44,7 @@ class HalmaGUI(Frame):
                 label = (board.xyToCoord(x,y), event.widget)
                 if self._cur_move:
                     cmd = self._cur_move[0] + "->" + label[0]
-                    report = game.run_command(cmd)
-                    print(report)
-                    self.set_banner(report)
-                    self.set_board(game.board)
+                    handle_command(cmd)
                     self._cur_move[1].config(state=NORMAL)
                     self._cur_move = None
                 else:
@@ -73,13 +70,18 @@ class HalmaGUI(Frame):
         def handle_entry(event):
             if event.widget.get():
                 cmd = event.widget.get()
-                print(cmd)
-                game.run_command(cmd)
-
+                handle_command(cmd)
                 event.widget.delete(0,END)
 
         def quit_command():
             exit(0)
+
+        def handle_command(cmd):
+            report = game.run_command(cmd)
+            print(report)
+            self.set_banner(report)
+            self.set_board(game.board)
+            
 
         entry = Entry(lower_frame)
         entry.pack(side=TOP, expand=YES,fill=X)
