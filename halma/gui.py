@@ -18,6 +18,7 @@ class HalmaGUI(Frame):
         banner.pack(side=LEFT, expand=YES,fill=BOTH)
 
         piece_config = {'width': 5, 'height': 2, 'foreground': 'black', 'borderwidth': 1, 'relief': GROOVE}
+        select_piece_config = {'width': 5, 'height': 2, 'foreground': 'black', 'borderwidth': 3, 'relief': GROOVE}
 
         game_frame = Frame(self)
         piece_frame = Frame(game_frame)
@@ -39,12 +40,14 @@ class HalmaGUI(Frame):
 
         def handle_label(x,y):
             def _handle_label(event):
-                label = board.xyToCoord(x,y)
+                label = (board.xyToCoord(x,y), event.widget)
                 if self._cur_move:
-                    print(self._cur_move + "->" + label)
-                    self._cur_move = ""
+                    print(self._cur_move[0] + "->" + label[0])
+                    #self._cur_move[1].config(**piece_config)
+                    self._cur_move = None
                 else:
                     self._cur_move = label
+                    #label[1].config(**select_piece_config)
 
             return _handle_label
                 
@@ -86,56 +89,6 @@ class HalmaGUI(Frame):
         game_frame.grid(row=1,column=0,stick="nswe")
         lower_frame.grid(row=2,column=0,stick="nswe")
         self.set_board(board)
-        
-
-        def handle_label(x,y):
-            def _handle_label(event):
-                label = board.xyToCoord(x,y)
-                if self._cur_move:
-                    print(self._cur_move + "->" + label)
-                    self._cur_move = ""
-                else:
-                    self._cur_move = label
-
-            return _handle_label
-                
-                
-        for row in range(board_size):
-            self._places.append([])
-            for col in range(board_size):
-                backg = "#505050"
-                label = Label(piece_frame, text='', bg=backg, **piece_config)
-                label.bind("<Button-1>", handle_label(row, col))
-                self._places[row].append(label)
-                label.grid(row=row,column=col, stick='nsew')
-                piece_frame.columnconfigure(col,weight=1)
-            piece_frame.rowconfigure(row,weight=1)
-
-        lower_frame = Frame(self)
-
-        def handle_entry(event):
-            if event.widget.get():
-                print(event.widget.get())
-                event.widget.delete(0,END)
-
-        def quit_command():
-            exit(0)
-        
-        entry = Entry(lower_frame)
-        entry.pack(side=TOP, expand=YES,fill=X)
-        entry.bind("<Return>", handle_entry)
-        qButton = Button(lower_frame, text="quit", command=quit_command)
-        qButton.pack(side=TOP, expand=YES)
-
-        self.rowconfigure(0, weight=1)
-        self.rowconfigure(1, weight=5)
-        self.rowconfigure(2, weight=1)
-
-        self.columnconfigure(0, weight=1)
-
-        upper_frame.grid(row=0,column=0,stick="nswe")
-        game_frame.grid(row=1,column=0,stick="nswe")
-        lower_frame.grid(row=2,column=0,stick="nswe")
 
     def set_board(self, board):
         for row in range(board.size):
