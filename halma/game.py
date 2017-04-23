@@ -1,4 +1,5 @@
 from tkinter import *
+import re
 
 import random
 
@@ -9,14 +10,22 @@ class Halma(object):
         self.board = Board(size)
         self.winner = None
         self.current_turn = 'g'
+        self.regExp = re.compile('[a-z]{1}\d{1}->\[a-z]{1}\d{1}')
 
     def run_command(self, cmd):
         """
         commands must be in the format "b6->c7"
         """
+        if not cmd:
+            return 'Invalid Command'
+
+        cmd = cmd.strip().lower()
+        
         if self.winner:
             return 'The winner is: {}'.format("Red" if self.winner == 'r' else 'Green')
-
+        if not self.regExp.match(cmd.strip().lower()):
+            return 'Invalid Command'
+        
         src, dst = cmd.split("->")
         src = self.board.coordToXY(src)
         dst = self.board.coordToXY(dst)
