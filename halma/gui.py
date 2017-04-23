@@ -23,14 +23,14 @@ class HalmaGUI(Frame):
 
         game_frame = Frame(self)
         piece_frame = Frame(game_frame)
-        
+
         game_frame.rowconfigure(0, weight=1)
         game_frame.columnconfigure(0, weight=1)
         for row in range(board_size):
             label = Label(game_frame, text=str(board_size-row))
             label.grid(row=row+1, column=0, stick='nsew')
             game_frame.rowconfigure(row+1, weight=1)
-                
+
         for col in range(board_size):
             label = Label(game_frame, text=chr(col+65))
             label.grid(row=0, column=col+1, stick='nsew')
@@ -55,8 +55,8 @@ class HalmaGUI(Frame):
                     label[1].config(state=ACTIVE)
 
             return _handle_label
-                
-                
+
+
         for row in range(board_size):
             self._places.append([])
             for col in range(board_size):
@@ -80,7 +80,7 @@ class HalmaGUI(Frame):
 
         def quit_command():
             exit(0)
-        
+
         entry = Entry(lower_frame)
         entry.pack(side=TOP, expand=YES,fill=X)
         entry.bind("<Return>", handle_entry)
@@ -108,12 +108,12 @@ class HalmaGUI(Frame):
                     widget.config(bg="#FF2020")
                 else:
                     widget.config(bg="#505050")
-                    
+
     def update_board(self, board):
         for row in range(len(board)):
             for col in range(len(board)):
                 widget = self._places[row][col]
-                
+
                 if board[row][col] == 'g':
                     widget.config(bg="#20FF20")
                 elif board[row][col] == 'r':
@@ -123,11 +123,11 @@ class HalmaGUI(Frame):
 
     def set_banner(self, text):
         self._banner.set(text)
-        
+
 
 def main():
     root = Tk()
-    size = 4
+    size = 8
     game = Halma(size)
     board = game.board
     gui = HalmaGUI(root, game)

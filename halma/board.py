@@ -38,15 +38,11 @@ class Board(object):
             string = string + str(self.state[c]) + '\n'
         return string
 
-    def winCheck(self, green_start, red_start):
-
-        self.red_start = red_start
-        self.green_start = green_start
-
+    def winCheck(self):
         if (self.green_positions == self.red_start):
-            return 'r'
-        elif (self.red_positions == self.green_start):
             return 'g'
+        elif (self.red_positions == self.green_start):
+            return 'r'
         else:
             return False
 
