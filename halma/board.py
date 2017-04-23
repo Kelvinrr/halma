@@ -2,23 +2,18 @@ from copy import copy
 
 class Board(object):
 
-    def __init__(self, w, h):
+    def __init__(self, size):
         self.state = [['o' for x in range(w)] for y in range(h)]
 
-        if w != h:
-            raise Exception("Width and height must be equal, got: ", w, h)
-        elif not isinstance(w, int) or not isinstance(h, int):
+        if not isinstance(size, int):
             raise Exception("Width and height must both be integers, got: {} {}"
                             .format(type(w), type(h)))
 
-        pieces = w//2 + 1
-
-        self.width = w
-        self.height = h
-
+        self.size = size
         self.red_start = set()
         self.green_start = set()
 
+        pieces = w//2 + 1
         for i in range(-pieces+1,0):
             row_len = i + pieces
             for j in range(row_len):
