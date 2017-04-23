@@ -3,10 +3,10 @@ class Board(object):
     def __init__(self, w, h):
         self.state = [[False for x in range(w)] for y in range(h)]
 
-        if w != h:
+        if w != h or isinstance(w, int):
             raise Exception("Width and height must be equal, got: ", w, h)
 
-        pieces = 5 if w == 8 else 6
+        pieces = w//2
 
         self.width = w
         self.height = h
