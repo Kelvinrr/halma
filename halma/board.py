@@ -48,16 +48,14 @@ class Board(object):
         else:
             return False
 
-       def move(self, destination, location):
+    def move(self, destination, location):
+
         if location in self.red_positions:
             self.red_positions.remove(location)
             self.red_positions.add(destination)
         if location in self.green_positions:
             self.green_positions.remove(location)
             self.green_positions.add(destination)
-
-        self.state[destination[0]][destination[1]] = self.state[location[0]][location[1]]
-        self.state[location[0]][location[1]] = "o"
 
     # Returns the coordinates of each adjacent valid spot to move
     def get_coordinates(self, x, y):
