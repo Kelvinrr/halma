@@ -1,9 +1,10 @@
 from board import Board
+from game import Halma
 from tkinter import *
 
 class HalmaGUI(Frame):
 
-    def __init__(self, root, board, **options):
+    def __init__(self, root, game, **options):
         super().__init__(root)
         self.root = root
         self.pack(expand=YES,fill=BOTH)
@@ -11,6 +12,7 @@ class HalmaGUI(Frame):
         self._banner = StringVar()
         self._banner.set("TESTING")
         self._cur_move = ""
+        board = game.board
         board_size = board.size
 
         upper_frame = Frame(self)
@@ -18,7 +20,6 @@ class HalmaGUI(Frame):
         banner.pack(side=LEFT, expand=YES,fill=BOTH)
 
         piece_config = {'width': 5, 'height': 2, 'foreground': 'black', 'borderwidth': 1, 'relief': GROOVE}
-        select_piece_config = {'width': 5, 'height': 2, 'foreground': 'black', 'borderwidth': 3, 'relief': GROOVE}
 
         game_frame = Frame(self)
         piece_frame = Frame(game_frame)
@@ -42,12 +43,15 @@ class HalmaGUI(Frame):
             def _handle_label(event):
                 label = (board.xyToCoord(x,y), event.widget)
                 if self._cur_move:
-                    print(self._cur_move[0] + "->" + label[0])
-                    #self._cur_move[1].config(**piece_config)
+                    cmd = self._cur_move[0] + "->" + label[0]
+                    print(cmd)
+                    self.set_board(game.board)
+                    game.run_command(cmd)
+                    self._cur_move[1].config(state=NORMAL)
                     self._cur_move = None
                 else:
                     self._cur_move = label
-                    #label[1].config(**select_piece_config)
+                    label[1].config(state=ACTIVE)
 
             return _handle_label
                 
@@ -67,7 +71,10 @@ class HalmaGUI(Frame):
 
         def handle_entry(event):
             if event.widget.get():
-                print(event.widget.get())
+                cmd = event.widget.get()
+                print(cmd)
+                game.run_command(cmd)
+
                 event.widget.delete(0,END)
 
         def quit_command():
@@ -120,8 +127,9 @@ class HalmaGUI(Frame):
 def main():
     root = Tk()
     size = 15
-    board = Board(15)
-    gui = HalmaGUI(root, board)
+    game = Halma(size)
+    board = game.board
+    gui = HalmaGUI(root, game)
     gui.set_board(board)
     root.mainloop()
 
