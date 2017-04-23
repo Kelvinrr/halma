@@ -24,16 +24,16 @@ class HalmaGUI(Frame):
         game_frame = Frame(self)
         piece_frame = Frame(game_frame)
 
-        game_frame.rowconfigure(0, weight=1)
-        game_frame.columnconfigure(0, weight=1)
+        game_frame.rowconfigure(0, weight=0, minsize=10)
+        game_frame.columnconfigure(0, weight=0, minsize=10)
         for row in range(board_size):
             label = Label(game_frame, text=str(board_size-row))
-            label.grid(row=row+1, column=0, stick='nsew')
+            label.grid(row=row+1, column=0, stick='ns')
             game_frame.rowconfigure(row+1, weight=1)
 
         for col in range(board_size):
             label = Label(game_frame, text=chr(col+65))
-            label.grid(row=0, column=col+1, stick='nsew')
+            label.grid(row=0, column=col+1, stick='ew')
             game_frame.columnconfigure(col+1, weight=1)
 
 
