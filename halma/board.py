@@ -21,13 +21,13 @@ class Board(object):
             row_len = i + pieces
             for j in range(row_len):
                 self.state[i][j] = 'r'
-                self.green_start.add((i, j))
+                self.red_start.add((size + i, j))
 
         for i in range(-pieces + 1, 0):
             row_len = i + pieces
             for j in range(row_len):
                 self.state[j][i] = 'g'
-                self.red_start.add((i, j))
+                self.green_start.add((j, size + i))
 
         self.red_positions = self.red_start.copy()
         self.green_positions = self.green_start.copy()
