@@ -85,16 +85,12 @@ class Board(object):
         print(adj_pos)
         return adj_pos
 
-
-board = Board(4, 4)
-board.get_coordinates(board.green_positions, 16, 16)
     def xyToCoord(self, x,y):
         return chr(y + 97) + str(self.size - x)
 
     def coordToXY(self, coord):
         coord = coord.strip().lower()
         return (ord(coord[0])-97, int(coord[1]))
-
 
 board = Board(16)
 print(board)
