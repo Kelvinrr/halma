@@ -1,5 +1,3 @@
-from copy import copy
-
 
 class Board(object):
     def __init__(self, size):
@@ -32,7 +30,7 @@ class Board(object):
         self.red_positions = self.red_start.copy()
         self.green_positions = self.green_start.copy()
 
-    def __str__(self):
+    def __str__(self): # pragma: no cover
         string = ''
         for c in range(len(self.state)):
             string = string + str(self.state[c]) + '\n'
@@ -46,7 +44,7 @@ class Board(object):
         else:
             return False
 
-    def move(self, destination, location):
+    def move(self, destination, location): # pragma: no cover
         if location in self.red_positions:
             self.red_positions.remove(location)
             self.red_positions.add(destination)
@@ -92,20 +90,24 @@ class Board(object):
             return adj_pos
 
     def xyToCoord(self, x,y):
-        return chr(y + 97) + str(self.size - x)
+        if (x,y) >= (self.size, self.size) or (x,y) < (0,0):
+            raise Exception("X and Y are out of bounds, got {} {} with size {}"
+                            .format(x,y,self.size))
+
+        return chr(x + 97) + str(self.size - y)
 
     def coordToXY(self, coord):
         coord = coord.strip().lower()
         return (ord(coord[0])-97, self.size - int(coord[1]))
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     board = Board(16)
     print(board)
     print(len(board.green_positions))
     print(board.green_positions)
     print(board.red_positions)
 
-    arr = [['o' for x in range(16)] for y in range(16)]
-    for pos in board.green_positions:
-        arr[pos[0]][pos[1]] = 'g'
-    print(arr)
+    # arr = [['o' for x in range(16)] for y in range(16)]
+    # for pos in board.green_positions:
+    #     arr[pos[0]][pos[1]] = 'g'
+    # print(arr)

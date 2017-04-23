@@ -126,7 +126,7 @@ class HalmaGUI(Frame):
 
 def main():
     root = Tk()
-    size = 8
+    size = 5
     game = Halma(size)
     board = game.board
     gui = HalmaGUI(root, game)
