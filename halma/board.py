@@ -83,12 +83,12 @@ class Board(object): # pragma: no cover
 
     def get_neighbors(self, pos): # pragma: no cover
         ns = set()
-        x = pos[0]
-        y = pos[1]
         for i in range(-1,2):
             for j in range(-1,2):
-                if (not (i == 0 and j == 0)) and self.check_in_bounds((x+i,y+j)) and ((x + i, y + j) in (self.red_positions | self.green_positions)):
-                    ns.add((x+i,y+j))
+                nx = pos[0] + i
+                ny = pos[1] + j
+                if (not (i == 0 and j == 0)) and self.check_in_bounds((nx,ny)) and ((nx, ny) in (self.red_positions | self.green_positions)):
+                    ns.add((nx,ny))
         return ns
 
     def get_all_valid_moves(self, positions): # pragma: no cover
@@ -112,7 +112,7 @@ class Board(object): # pragma: no cover
                 if not (i == 0 and j == 0) and self.check_in_bounds((x+i,y+j)) and ((x + i, y + j) not in (self.red_positions | self.green_positions)):
                     adj_pos.add((x + i, y + j))
         jumps = self.get_jumps((x,y), set())
-        if jumps:
+        if jumps and len(jumps) > 1:
             adj_pos |= jumps
         return adj_pos
 
