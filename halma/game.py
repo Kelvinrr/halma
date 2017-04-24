@@ -29,6 +29,12 @@ class Halma(object):
         """
         commands must be in the format "b6->c7"
         """
+        def in_camp(to, frm):
+            invalid = [False, True]
+            red = [(to in self.board.red_start), (frm in self.board.red_start)]
+            green = [(to in self.board.green_start), (frm in self.board.green_start)]
+            return not red == invalid if self.current_turn == 'r' else not green == invalid
+
         if not cmd:
             return 'Empty Command'
 
@@ -42,11 +48,10 @@ class Halma(object):
         src, dst = cmd.split("->")
         src = self.board.coordToXY(src)
         dst = self.board.coordToXY(dst)
-
-        if self.current_turn == 'g' and src in self.board.green_positions:
+        if self.current_turn == 'g' and src in self.board.green_positions and in_camp(src,dst):
             if not self.board.move(dst, src):
                 return "Invalid Move"
-        elif self.current_turn == 'r' and src in self.board.red_positions:
+        elif self.current_turn == 'r' and src in self.board.red_positions and in_camp(src,dst):
             if not self.board.move(dst, src):
                 return "Invalid Move"
         else:
