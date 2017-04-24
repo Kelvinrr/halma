@@ -1,4 +1,3 @@
-
 class Board(object):
     def __init__(self, size, initial_board=None):
         if not isinstance(size, int):
@@ -70,26 +69,47 @@ class Board(object):
             self.green_positions.add(destination)
         return True
 
+    def check_in_bounds(self, pos):
+        return pos[0] >= 0 and pos[1] >= 0 and pos[0] < self.size and pos[1] < self.size
+    
+    def get_jumps(self, dest, visited):
+        ns = self.get_neighbors(dest)
+        visited.add(dest)
+        for n in ns:
+            pos = (2*n[0] - dest[0], 2*n[1] - dest[1])
+            if pos not in (self.red_positions | self.green_positions) and self.check_in_bounds(pos) and (pos not in visited):
+                self.get_jumps(pos, visited)
+        return visited
+    
+    def get_neighbors(self, pos):
+        ns = set()
+        x = pos[0]
+        y = pos[1]
+        for i in range(-1,2):
+            for j in range(-1,2):
+                if (not (i == 0 and j == 0)) and self.check_in_bounds((x+i,y+j)) and ((x + i, y + j) in (self.red_positions | self.green_positions)):
+                    ns.add((x+i,y+j))
+        return ns
+    
     # Returns the coordinates of each adjacent valid spot to move
     def get_coordinates(self, x, y):
 
-        adj_pos = []
+        adj_pos = set()
         row_length = self.size
         col_length = self.size
 
         # Height / Width of board
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if i == 0 and j == 0:
-                    continue
-                else:
-                    if (x + i >= 0 and y + j >= 0) and ((x + i) < col_length and (y + j) < row_length) and ((x + i, y + j) not in (self.red_positions and self.green_positions)):
-                        adj_pos.append((x + i, y + j))
+                if not (i == 0 and j == 0) and self.check_in_bounds((x+i,y+j)) and ((x + i, y + j) not in (self.red_positions | self.green_positions)):
+                    adj_pos.add((x + i, y + j))
+        jumps = self.get_jumps((x,y), set())
+        if jumps:
+            adj_pos = adj_pos | jumps
         return adj_pos
 
     def is_valid(self, destination, location):
         adj_positions = self.get_coordinates(location[0], location[1])
-        print((self.red_positions or self.green_positions))
         if(destination in (self.red_positions or self.green_positions)):
             return False
 

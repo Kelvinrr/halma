@@ -13,7 +13,7 @@ if __name__ == "__main__": # pragma : no cover
         argv = sys.argv
         
         basic_board = None
-        if len(argv) < 5:
+        if len(argv) < 4:
                 print(len(argv))
                 print("Invalid arguments")
                 exit(1)
@@ -21,8 +21,9 @@ if __name__ == "__main__": # pragma : no cover
                 basic_board = build_board(open(argv[4],'r'))
                 if (len(basic_board) != int(argv[1])):
                         print("Size of passed board incorrect")
-                print(basic_board)
         except FileNotFoundError:
+                pass
+        except IndexError:
                 pass
                 
         root = Tk()
