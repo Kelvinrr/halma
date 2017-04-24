@@ -90,10 +90,18 @@ class Board(object):
                 if (not (i == 0 and j == 0)) and self.check_in_bounds((x+i,y+j)) and ((x + i, y + j) in (self.red_positions | self.green_positions)):
                     ns.add((x+i,y+j))
         return ns
+
+    def get_all_valid_moves(self, positions):
+        valid = set()
+        for piece in positions:
+            valid = valid | self.get_valid_moves(piece)
+        return valid
     
     # Returns the coordinates of each adjacent valid spot to move
-    def get_coordinates(self, x, y):
+    def get_valid_moves(self, pos):
 
+        x = pos[0]
+        y = pos[1]
         adj_pos = set()
         row_length = self.size
         col_length = self.size
@@ -109,15 +117,8 @@ class Board(object):
         return adj_pos
 
     def is_valid(self, destination, location):
-        adj_positions = self.get_coordinates(location[0], location[1])
-        if(destination in (self.red_positions or self.green_positions)):
-            return False
-
-        if (destination in adj_positions):
-            return True
-
-        else:
-            return False
+        adj_positions = self.get_valid_moves((location[0], location[1]))
+        return not destination in (self.red_positions or self.green_positions) and destination in adj_positions
 
 
     def xyToCoord(self, x,y):

@@ -16,6 +16,7 @@ class HalmaGUI(Frame): # pragma: no cover
         self._banner = StringVar()
         self._banner.set("TESTING")
         self._cur_move = ""
+        self._last_move = None
         board = game.board
         board_size = board.size
 
@@ -43,12 +44,28 @@ class HalmaGUI(Frame): # pragma: no cover
         piece_frame.grid(row=1,column=1,rowspan=board_size,columnspan=board_size, stick='nsew')
 
         def handle_label(x,y):
+            def adjust_bg(widget, func):
+                widget.config(bg="#%02x%02x%02x" % tuple(map(func, widget.winfo_rgb(widget.cget("bg")))))
+                
+            
             def _handle_label(event):
                 label = (board.xyToCoord(x,y), event.widget)
                 if self._cur_move:
+                    if self._last_move:
+                        adjust_bg(self._last_move[0], lambda x: x*2)
+                        adjust_bg(self._last_move[1], lambda x: x*2)
                     cmd = self._cur_move[0] + "->" + label[0]
-                    handle_command(cmd)
+                    report = handle_command(cmd)
                     self._cur_move[1].config(state=NORMAL)
+
+                    print("Turn" in report)
+                    if "Turn" in report:
+                        adjust_bg(self._cur_move[1], lambda x: x//2)
+                        adjust_bg(label[1], lambda x: x//2)
+                        self._last_move = (self._cur_move[1], label[1])
+                    else:
+                        self._last_move = None
+                        
                     self._cur_move = None
                 else:
                     self._cur_move = label
@@ -88,6 +105,7 @@ class HalmaGUI(Frame): # pragma: no cover
             print(report)
             self.set_banner(report)
             self.set_board(self.game.board)
+            return report
 
 
         entry = Entry(lower_frame)
@@ -119,16 +137,7 @@ class HalmaGUI(Frame): # pragma: no cover
                     widget.config(bg="#505050")
 
     def update_board(self, board):
-        for row in range(len(board)):
-            for col in range(len(board)):
-                widget = self._places[row][col]
-
-                if board[row][col] == 'g':
-                    widget.config(bg="#20FF20")
-                elif board[row][col] == 'r':
-                    widget.config(bg="#FF2020")
-                else:
-                    widget.config(bg="#505050")
+        raise NotImplementedException()
 
     def set_banner(self, text):
         self._banner.set(text)
