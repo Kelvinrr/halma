@@ -100,3 +100,10 @@ class Board(object):
     def coordToXY(self, coord):
         coord = coord.strip().lower()
         return (ord(coord[0])-97, self.size - int(coord[1]))
+
+    def calcDistToGoal(self, pos, campPos):
+        dist = float('inf')
+        for cPos in campPos:
+            cur_dist = ((cPos[0]-pos[0])**2 + (cPos[1]-pos[1])**2)**(1/2)
+            dist = min(dist, cur_dist)
+        return dist

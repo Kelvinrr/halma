@@ -40,7 +40,6 @@ class HalmaGUI(Frame): # pragma: no cover
             label.grid(row=0, column=col+1, stick='ew')
             game_frame.columnconfigure(col+1, weight=1)
 
-
         piece_frame.grid(row=1,column=1,rowspan=board_size,columnspan=board_size, stick='nsew')
 
         def handle_label(x,y):
@@ -83,6 +82,9 @@ class HalmaGUI(Frame): # pragma: no cover
         def handle_command(cmd):
             print(cmd)
             report = self.game.run_command(cmd)
+            if self.game.winner:
+                stats = self.game.get_win_stats()
+                report += "\nMove Cycles: {}\nGreen Score: {}\nRed Score: {}".format(stats[0],stats[1],stats[2])
             print(report)
             self.set_banner(report)
             self.set_board(self.game.board)

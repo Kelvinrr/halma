@@ -9,6 +9,21 @@ class Halma(object):
         self.winner = None
         self.current_turn = 'g'
         self.regExp = re.compile('[a-z]{1}\d{1}->[a-z]{1}\d{1}')
+        self.cycles = 0
+
+    def get_win_stats(self):
+        if not self.winner:
+            return None
+        red_score = 0
+        for red in self.board.red_positions:
+            p_score = self.board.calcDistToGoal(red, self.board.green_start)
+            red_score += 1/p_score if p_score != 0 else 1
+            
+        green_score = 0
+        for green in self.board.green_positions:
+            p_score = self.board.calcDistToGoal(green, self.board.red_start)
+            green_score += 1/p_score if p_score != 0 else 1 
+        return (self.cycles, green_score, red_score)
 
     def run_command(self, cmd):
         """
@@ -36,8 +51,8 @@ class Halma(object):
                 return "Invalid Move"
         else:
             return "Invalid Move"
-
         self.current_turn = 'r' if self.current_turn == 'g' else 'g'
+        self.cycles += 1 if self.current_turn == 'g' else 0
 
         self.winner = self.board.winCheck()
         if self.winner:
