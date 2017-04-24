@@ -1,6 +1,6 @@
 
 class Board(object):
-    def __init__(self, size):
+    def __init__(self, size, initial_board=None):
         if not isinstance(size, int):
             raise Exception("Width and height must both be integers, got: {} {}"
                             .format(type(size), type(size)))
@@ -22,9 +22,19 @@ class Board(object):
             row_len = i + pieces
             for j in range(row_len):
                 self.green_start.add((j, size + i))
-
-        self.red_positions = self.red_start.copy()
-        self.green_positions = self.green_start.copy()
+                
+        if initial_board:
+            self.red_positions = set()
+            self.green_positions = set()
+            for y in range(self.size):
+                for x in range(self.size):
+                    if initial_board[y][x] == 'g':
+                        self.green_positions.add((x,y))
+                    elif initial_board[y][x] == 'r':
+                        self.red_positions.add((x,y))
+        else :
+            self.red_positions = self.red_start.copy()
+            self.green_positions = self.green_start.copy()
 
     def __str__(self): # pragma: no cover
         string = ''

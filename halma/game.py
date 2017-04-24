@@ -4,9 +4,11 @@ import random
 from halma.board import Board
 
 class Halma(object):
-    def __init__(self, size):
-        self.board = Board(size)
+    def __init__(self, size, time, player, initial_board=None):
+        self.board = Board(size, initial_board=initial_board)
         self.winner = None
+        self.time = time
+        self.player = player
         self.current_turn = 'g'
         self.regExp = re.compile('[a-z]{1}\d{1}->[a-z]{1}\d{1}')
         self.cycles = 0
