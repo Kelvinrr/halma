@@ -3,7 +3,7 @@ from tkinter import *
 import random
 from halma.board import Board
 
-class Halma(object):
+class Halma(object): # pragma: no cover
     def __init__(self, size, time, player, initial_board=None):
         self.board = Board(size, initial_board=initial_board)
         self.winner = None
@@ -20,11 +20,11 @@ class Halma(object):
         for red in self.board.red_positions:
             p_score = self.board.calcDistToGoal(red, self.board.green_start)
             red_score += 1/p_score if p_score != 0 else 1
-            
+
         green_score = 0
         for green in self.board.green_positions:
             p_score = self.board.calcDistToGoal(green, self.board.red_start)
-            green_score += 1/p_score if p_score != 0 else 1 
+            green_score += 1/p_score if p_score != 0 else 1
         return (self.cycles, green_score, red_score)
 
     def run_command(self, cmd):
