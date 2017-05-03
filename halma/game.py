@@ -55,7 +55,7 @@ class Halma(object): # pragma: no cover
             return "Invalid Move"
 
         
-        # self.current_turn = 'r' if self.current_turn == 'g' else 'g'
+        self.current_turn = 'r' if self.current_turn == 'g' else 'g'
         self.cycles += 1 if self.current_turn == 'g' else 0
 
         self.winner = self.board.winCheck()
