@@ -24,6 +24,9 @@ class AI(object):
                     child = self.gen_tree(depth - 1, opp, teamC, not player, (src, dest))
                     score = minimax(score, child.score) 
                     children.append(child)
+        else:
+            score = self.board.dist_to_line('r') + self.board.distToGoal('r') + self.board.minDistToGoal('r')
+                    
 
         return Tree(teams, score, children, move)
 
