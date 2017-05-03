@@ -28,7 +28,7 @@ class AI(object):
         return Tree(teams, score, children, move)
 
     def get_optimal_move(self, depth, team, opp, player):
-        root = self.ai.gen_tree(depth, self.board.red.pos, self.board.green.pos, player, ())
+        root = self.gen_tree(depth, self.board.red.pos, self.board.green.pos, player, ())
         for child in root.children:
             if child.score == root.score:
                 return child.move
