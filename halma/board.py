@@ -1,3 +1,5 @@
+from collections import namedtuple
+Team = namedtuple('Team', ['pos', 'start','goal','player'])
 class Board(object): # pragma: no cover
     def __init__(self, size, initial_board=None):
         if not isinstance(size, int):
@@ -37,10 +39,9 @@ class Board(object): # pragma: no cover
         else :
             red_positions = red_start.copy()
             green_positions = green_start.copy()
-
-        self.red = (red_positions, red_start, green_start, 'r')
-        self.green = (green_positions, green_start, red_start, 'g')
-        
+            
+        self.red = Team(red_positions, red_start, green_start, 'r')
+        self.green = Team(green_positions, green_start, red_start, 'g')
 
     def __str__(self): # pragma: no cover
         string = ''
@@ -49,8 +50,8 @@ class Board(object): # pragma: no cover
             for x in range(self.size):
                 found = False
                 for team in [self.red, self.green]:
-                    if (x,y) in team[0]:
-                        l.append(team[4])
+                    if (x,y) in team.pos:
+                        l.append(team.player)
                         found = True
                 if not found:
                     l.append('-')
@@ -59,12 +60,12 @@ class Board(object): # pragma: no cover
 
     def winCheck(self):
         for team in [self.red, self.green]:
-            if team[0] == team[3]:
-                return team[4]
+            if team.pos == team.goal:
+                return team.player
         return False
 
     def move(self, destination, location, team):
-        return self.sub_move(destination, location, team[0])
+        return self.sub_move(destination, location, team.pos)
 
     def sub_move(self, destination, location, team):
         if location in team and self.is_valid(destination, location):
@@ -97,7 +98,7 @@ class Board(object): # pragma: no cover
 
     def get_all_valid_moves(self, team): # pragma: no cover
         valid = set()
-        for piece in team[0]:
+        for piece in team.pos:
             valid.add((piece, self.get_valid_moves(piece)))
         return valid
 

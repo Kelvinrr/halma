@@ -1,11 +1,12 @@
-import board
-from tree import Tree
+from halma.board import Board
+from halma.tree import Tree
 
 class AI(object):
-    def __init__(board):
+    
+    def __init__(self, board):
         self.board = board
     
-    def gen_tree(team, opp, depth, player, move):
+    def gen_tree(self, team, opp, depth, player, move):
         children= set()
         if player:
             teams = (opp, team)

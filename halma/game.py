@@ -2,11 +2,12 @@ from tkinter import *
 
 import random
 from halma.board import Board
+from halma.ai import AI
 
 class Halma(object): # pragma: no cover
     def __init__(self, size, time, player, initial_board=None):
         self.board = Board(size, initial_board=initial_board)
-        self.ai = AI(board)
+        self.ai = AI(self.board)
         self.winner = None
         self.time = time
         self.player = player
@@ -33,7 +34,7 @@ class Halma(object): # pragma: no cover
         commands must be in the format "b6->c7"
         """
         def in_camp(to, frm, team):
-            return to in team[1] or not frm in team[1] 
+            return to in team.goal or not frm in team.goal 
 
         if not cmd:
             return 'Empty Command'
@@ -49,7 +50,7 @@ class Halma(object): # pragma: no cover
         src = self.board.coordToXY(src)
         dst = self.board.coordToXY(dst)
         team = self.board.green if self.current_turn == 'g' else self.board.red
-        if src in team[0] and in_camp(src,dst,team) and not self.board.move(dst, src, team):
+        if src in team.pos and in_camp(src,dst,team) and not self.board.move(dst, src, team):
             return "Invalid Move"
         
         self.current_turn = 'r' if self.current_turn == 'g' else 'g'
