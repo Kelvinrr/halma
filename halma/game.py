@@ -57,8 +57,8 @@ class Halma(object): # pragma: no cover
         src, dest = self.ai.get_optimal_move(3, self.board.red.pos, self.board.green.pos, False)
         self.board.move(dest, src, self.board.red)
 
-
         # self.current_turn = 'r' if self.current_turn == 'g' else 'g'
+
         self.cycles += 1 if self.current_turn == 'g' else 0
 
         self.winner = self.board.winCheck()

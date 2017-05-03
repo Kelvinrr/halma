@@ -25,13 +25,14 @@ class AI(object):
                     score = minimax(score, child.score) 
                     children.append(child)
         else:
-            score = self.board.dist_to_line('r') + self.board.distToGoal('r') + self.board.minDistToGoal('r')
+            playerRep = 'g' if player else 'r'
+            score = self.board.dist_to_line(playerRep) + self.board.distToGoal(playerRep) + self.board.minDistToGoal(playerRep)
                     
 
         return Tree(teams, score, children, move)
 
     def get_optimal_move(self, depth, team, opp, player):
-        root = self.gen_tree(depth, self.board.red.pos, self.board.green.pos, player, ())
+        root = self.gen_tree(depth, team, opp, player, ())
         for child in root.children:
             if child.score == root.score:
                 return child.move

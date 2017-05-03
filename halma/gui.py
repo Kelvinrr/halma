@@ -107,6 +107,22 @@ class HalmaGUI(Frame): # pragma: no cover
             self.set_board(self.game.board)
             return report
 
+        # AI TESTING STUFF HERE
+        self.team = board.green.pos
+        self.opp = board.red.pos
+        self.player = True
+        def ai_play():
+            src, dest = self.game.ai.get_optimal_move(1, self.team, self.opp, self.player)
+            cmd = board.xyToCoord(src[0],src[1]) + "->" + board.xyToCoord(dest[0], dest[1])
+            handle_command(cmd)
+            temp = self.team
+            self.team = self.opp
+            self.opp = temp
+            self.player = not self.player
+            self.after(1000,ai_play)
+                
+        self.after(1000,ai_play)
+        # END AI TESTING STUFF
 
         entry = Entry(lower_frame)
         entry.pack(side=TOP, expand=YES,fill=X)
@@ -124,6 +140,8 @@ class HalmaGUI(Frame): # pragma: no cover
         game_frame.grid(row=1,column=0,stick="nswe")
         lower_frame.grid(row=2,column=0,stick="nswe")
         self.set_board(board)
+
+        
 
     def set_board(self, board):
         for row in range(board.size):
