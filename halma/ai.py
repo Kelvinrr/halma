@@ -24,7 +24,10 @@ class AI(object):
 
         for src in team:
             for dest in board.get_valid_moves(src):
-                child = gen_tree(tree, opp, team, depth - 1, not player, (src, dest))
+                teamC = team.copy()
+                self.board.sub_move(dest,src, teamC)
+                child = gen_tree(tree, opp, teamC, depth - 1, not player, (src, dest))
+                
                 score = minimax(score, child) 
                 children.add(child)
         sub_tree.score = score
