@@ -50,7 +50,8 @@ class Halma(object): # pragma: no cover
         src = self.board.coordToXY(src)
         dst = self.board.coordToXY(dst)
         team = self.board.green if self.current_turn == 'g' else self.board.red
-        if src in team.pos and in_camp(src,dst,team) and not self.board.move(dst, src, team):
+        
+        if (not src in team.pos) or not in_camp(src,dst,team) or (not self.board.move(dst, src, team)):
             return "Invalid Move"
         
         self.current_turn = 'r' if self.current_turn == 'g' else 'g'
