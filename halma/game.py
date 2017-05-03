@@ -6,6 +6,7 @@ from halma.board import Board
 class Halma(object): # pragma: no cover
     def __init__(self, size, time, player, initial_board=None):
         self.board = Board(size, initial_board=initial_board)
+        self.ai = AI(board)
         self.winner = None
         self.time = time
         self.player = player
