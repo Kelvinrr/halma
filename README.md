@@ -3,3 +3,13 @@
 # halma
 
 A Bullshit AI project By Three assholes: Kelvin Rodriguez, Tyler Thatcher, Jack Garrard
+
+
+
+Factors for computing scores
+* the squared sum of the distances to the
+destination corner for all pieces of player
+* the squared sum of distances to the vertical
+central line for all pieces of player
+* the sum of maximum vertical advance for
+all pieces of player
