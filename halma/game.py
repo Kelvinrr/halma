@@ -31,11 +31,8 @@ class Halma(object): # pragma: no cover
         """
         commands must be in the format "b6->c7"
         """
-        def in_camp(to, frm):
-            invalid = [False, True]
-            red = [(to in self.board.red_start), (frm in self.board.red_start)]
-            green = [(to in self.board.green_start), (frm in self.board.green_start)]
-            return not red == invalid if self.current_turn == 'r' else not green == invalid
+        def in_camp(to, frm, team):
+            return to in team[1] or not frm in team[1] 
 
         if not cmd:
             return 'Empty Command'
@@ -50,14 +47,10 @@ class Halma(object): # pragma: no cover
         src, dst = cmd.split("->")
         src = self.board.coordToXY(src)
         dst = self.board.coordToXY(dst)
-        if self.current_turn == 'g' and src in self.board.green_positions and in_camp(src,dst):
-            if not self.board.move(dst, src):
-                return "Invalid Move"
-        elif self.current_turn == 'r' and src in self.board.red_positions and in_camp(src,dst):
-            if not self.board.move(dst, src):
-                return "Invalid Move"
-        else:
+        team = self.board.green if self.current_turn == 'g' else self.board.red
+        if src in team[0] and in_camp(src,dst,team) and not self.board.move(dst, src, team):
             return "Invalid Move"
+        
         self.current_turn = 'r' if self.current_turn == 'g' else 'g'
         self.cycles += 1 if self.current_turn == 'g' else 0
 

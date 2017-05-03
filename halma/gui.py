@@ -129,9 +129,9 @@ class HalmaGUI(Frame): # pragma: no cover
         for row in range(board.size):
             for col in range(board.size):
                 widget = self._places[row][col]
-                if (col,row) in board.green_positions:
+                if (col,row) in board.green[0]:
                     widget.config(bg="#20FF20")
-                elif (col, row) in board.red_positions:
+                elif (col, row) in board.red[0]:
                     widget.config(bg="#FF2020")
                 else:
                     widget.config(bg="#505050")
