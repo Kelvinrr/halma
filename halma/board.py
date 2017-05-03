@@ -1,5 +1,6 @@
 from collections import namedtuple
 Team = namedtuple('Team', ['pos', 'start','goal','player'])
+
 class Board(object): # pragma: no cover
     def __init__(self, size, initial_board=None):
         if not isinstance(size, int):
@@ -39,7 +40,7 @@ class Board(object): # pragma: no cover
         else :
             red_positions = red_start.copy()
             green_positions = green_start.copy()
-            
+
         self.red = Team(red_positions, red_start, green_start, 'r')
         self.green = Team(green_positions, green_start, red_start, 'g')
 
