@@ -12,6 +12,8 @@ class Board(object): # pragma: no cover
         self.red_change = set()
 
         pieces = size // 2 + 1
+        if size == 5:
+            pieces = 5
         for i in range(-pieces + 1, 0):
             row_len = i + pieces
             for j in range(row_len):

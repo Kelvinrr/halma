@@ -14,7 +14,7 @@ class HalmaGUI(Frame): # pragma: no cover
         self.pack(expand=YES,fill=BOTH)
         self._places = []
         self._banner = StringVar()
-        self._banner.set("TESTING")
+        self._banner.set("Game Start")
         self._cur_move = ""
         self._last_move = None
         board = game.board
@@ -46,8 +46,8 @@ class HalmaGUI(Frame): # pragma: no cover
         def handle_label(x,y):
             def adjust_bg(widget, func):
                 widget.config(bg="#%02x%02x%02x" % tuple(map(func, widget.winfo_rgb(widget.cget("bg")))))
-                
-            
+
+
             def _handle_label(event):
                 label = (board.xyToCoord(x,y), event.widget)
                 if self._cur_move:
@@ -65,7 +65,7 @@ class HalmaGUI(Frame): # pragma: no cover
                         self._last_move = (self._cur_move[1], label[1])
                     else:
                         self._last_move = None
-                        
+
                     self._cur_move = None
                 else:
                     self._cur_move = label
