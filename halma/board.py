@@ -38,9 +38,9 @@ class Board(object): # pragma: no cover
             red_positions = red_start.copy()
             green_positions = green_start.copy()
 
-        self.red = (red_positions, red_start, green_start, 'r')
-        self.green = (green_positions, green_start, red_start, 'g')
-        
+        self.red = [red_positions, red_start, green_start, 'r']
+        self.green = [green_positions, green_start, red_start, 'g']
+
 
     def __str__(self): # pragma: no cover
         string = ''
@@ -50,7 +50,7 @@ class Board(object): # pragma: no cover
                 found = False
                 for team in [self.red, self.green]:
                     if (x,y) in team[0]:
-                        l.append(team[4])
+                        l.append(team[3])
                         found = True
                 if not found:
                     l.append('-')
@@ -59,8 +59,8 @@ class Board(object): # pragma: no cover
 
     def winCheck(self):
         for team in [self.red, self.green]:
-            if team[0] == team[3]:
-                return team[4]
+            if team[0] == team[2]:
+                return team[3]
         return False
 
     def move(self, destination, location, team):

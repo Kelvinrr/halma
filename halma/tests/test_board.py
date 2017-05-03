@@ -43,19 +43,19 @@ class TestBoard(unittest.TestCase):
                                         (10, 2)})
     def test_8x8(self):
         test_board = Board(8)
-        assert test_board.green_positions == self.green_8x8_positions
-        assert test_board.red_positions == self.red_8x8_positions
+        assert test_board.green[0] == self.green_8x8_positions
+        assert test_board.red[0] == self.red_8x8_positions
 
     def test_10x10(self):
         test_board = Board(10)
-        assert test_board.green_positions == self.green_10x10_positions
-        assert test_board.red_positions == self.red_10x10_positions
+        assert test_board.green[0] == self.green_10x10_positions
+        assert test_board.red[0] == self.red_10x10_positions
 
 
     def test_16x16(self):
         test_board = Board(16)
-        assert test_board.green_positions == self.green_16x16_positions
-        assert test_board.red_positions == self.red_16x16_positions
+        assert test_board.green[0] == self.green_16x16_positions
+        assert test_board.red[0] == self.red_16x16_positions
 
     def test_init(self):
         with self.assertRaises(Exception):
@@ -64,10 +64,11 @@ class TestBoard(unittest.TestCase):
     def test_wincheck(self):
         test_board = Board(5)
         assert not test_board.winCheck()
-        test_board.green_positions = test_board.red_start
+        test_board.green[0] = test_board.green[2]
+        print(test_board.winCheck())
         assert test_board.winCheck() == 'g'
-        test_board.green_positions = test_board.green_start
-        test_board.red_positions = test_board.green_start
+        test_board.green[0] = test_board.green[1]
+        test_board.red[0] = test_board.green[1]
         assert test_board.winCheck() == 'r'
 
     def test_xyToCoord(self):
