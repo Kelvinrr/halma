@@ -161,12 +161,9 @@ class Board(object): # pragma: no cover
         return dist
 
     def evaluation(self, point_one, point_two):
-
         sumSquares = 0
-
         for point in point_one:
             sumSquares = sumSquares + (((point_two[0] - point[0])**2) + ((point_two[1] - point[1]))**2)
-
         return sumSquares
 
     def calculate_line(self, x, y):
@@ -177,49 +174,34 @@ class Board(object): # pragma: no cover
 
         numerator = abs(y_diff*x - (x_diff*y) + ((self.size - 1)**2))
         denominator = math.sqrt(y_diff**2 + x_diff**2)
-
         distance = numerator/denominator
-
         return distance
 
 
 
     def dist_to_line(self, player):
-
         sumLineSquare = 0
-
         if(player == 'r'):
-
             for point in self.red[0]:
-
                 minDist = 0
-
                 for move in self.get_valid_moves(point):
-
                     if(minDist < self.calculate_line(move[0], move[1])):
                         minDist = self.calculate_line(move[0], move[1])
-
                 distance = minDist
                 sumLineSquare += distance**2
-
             return sumLineSquare
 
         if(player == 'g'):
-
             for point in self.green[0]:
                 distance = self.calculate_line(point[0], point[1])
                 sumLineSquare = distance ** 2
-
             return sumLineSquare
-
         else:
             print("Invalid Player")
 
     def distToGoal(self, player):
-
         if (player == 'r'):
             return self.evaluation(self.red[0], self.red_goal)
-
         if (player == 'g'):
             return self.evaluation(self.green[0], self.green_goal)
 
@@ -228,39 +210,24 @@ class Board(object): # pragma: no cover
     def minDistToGoal(self, player):
 
         sumLineSquare = 0
-
         if (player == 'r'):
-
             for point in self.red[0]:
-
                 minDist = 0
-
                 for move in self.get_valid_moves(point):
-
                     if (minDist < self.calculate_line(move[0], move[1])):
                         minDist = self.calculate_line(move[0], move[1])
-
                 distance = minDist
                 sumLineSquare = sumLineSquare + distance
-
             return sumLineSquare
 
         if (player == 'g'):
-
             for point in self.green[0]:
-
-
                 minDist = 0
-
                 for move in self.get_valid_moves(point):
-
                     if (minDist < self.calculate_line(move[0], move[1])):
                         minDist = self.calculate_line(move[0], move[1])
-
                 distance = minDist
                 sumLineSquare = sumLineSquare + distance
-
             return sumLineSquare
-
         else:
             print("Invalid Player")
