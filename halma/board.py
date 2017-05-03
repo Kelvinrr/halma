@@ -135,7 +135,8 @@ class Board(object): # pragma: no cover
                 if not (i == 0 and j == 0) and self.check_in_bounds((new_x,new_y)) and ((new_x, new_y) not in (self.red[0] | self.green[0])):
                     adj_pos.add((new_x, new_y))
         jumps = self.get_jumps((pos[0],pos[1]), set())
-        if jumps and len(jumps) > 1:
+        jumps.remove((pos[0],pos[1]))
+        if jumps:
             adj_pos |= jumps
         return adj_pos
 
@@ -154,6 +155,9 @@ class Board(object): # pragma: no cover
     def coordToXY(self, coord):
         coord = coord.strip().lower()
         return (ord(coord[0])-97, self.size - int(coord[1]))
+
+    def moveToString(self, src, dest):
+        return self.xyToCoord(src[0],src[1]) + "->" + self.xyToCoord(dest[0], dest[1])
 
     def calcDistToGoal(self, pos, campPos): # pragma: no cover
         dist = float('inf')

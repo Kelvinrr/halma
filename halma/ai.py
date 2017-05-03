@@ -1,5 +1,6 @@
 from halma.board import Board
 from halma.tree import Tree
+import random
 
 class AI(object):
     def __init__(self, board):
@@ -26,7 +27,8 @@ class AI(object):
                     children.append(child)
         else:
             playerRep = 'g' if player else 'r'
-            score = self.board.dist_to_line(playerRep) + self.board.distToGoal(playerRep) + self.board.minDistToGoal(playerRep)
+            score = random.randint(0,100)
+            # score = self.board.dist_to_line(playerRep) + self.board.distToGoal(playerRep) + self.board.minDistToGoal(playerRep)
                     
 
         return Tree(teams, score, children, move)

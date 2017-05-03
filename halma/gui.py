@@ -113,13 +113,13 @@ class HalmaGUI(Frame): # pragma: no cover
         self.player = True
         def ai_play():
             src, dest = self.game.ai.get_optimal_move(1, self.team, self.opp, self.player)
-            cmd = board.xyToCoord(src[0],src[1]) + "->" + board.xyToCoord(dest[0], dest[1])
+            cmd = board.moveToString(src, dest)
             handle_command(cmd)
             temp = self.team
             self.team = self.opp
             self.opp = temp
             self.player = not self.player
-            self.after(1000,ai_play)
+            self.after(100,ai_play)
                 
         self.after(1000,ai_play)
         # END AI TESTING STUFF
