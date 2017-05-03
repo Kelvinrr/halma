@@ -54,7 +54,7 @@ class Halma(object): # pragma: no cover
         if (not src in team.pos) or not in_camp(src,dst,team) or (not self.board.move(dst, src, team)):
             return "Invalid Move"
 
-        src, dest = self.ai.get_optimal_move(1, self.board.red.pos, self.board.green.pos, False)
+        src, dest = self.ai.get_optimal_move(3, self.board.red.pos, self.board.green.pos, False)
         self.board.move(dest, src, self.board.red)
             
         

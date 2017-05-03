@@ -1,4 +1,5 @@
 from collections import namedtuple
+import math
 Team = namedtuple('Team', ['pos', 'start','goal','player'])
 
 class Board(object): # pragma: no cover
