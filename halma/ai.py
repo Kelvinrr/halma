@@ -25,7 +25,8 @@ class AI(object):
                     score = minimax(score, child.score) 
                     children.append(child)
         else:
-            score = self.board.dist_to_line('r') + self.board.distToGoal('r') + self.board.minDistToGoal('r')
+            playerRep = 'g' if player else 'r'
+            score = self.board.dist_to_line(playerRep) + self.board.distToGoal(playerRep) + self.board.minDistToGoal(playerRep)
                     
 
         return Tree(teams, score, children, move)
