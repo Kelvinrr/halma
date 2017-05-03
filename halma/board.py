@@ -64,9 +64,12 @@ class Board(object): # pragma: no cover
         return False
 
     def move(self, destination, location, team):
-        if location in team[0] and self.is_valid(destination, location):
-            team[0].remove(location)
-            team[0].add(destination)
+        return self.sub_move(destination, location, team[0])
+
+    def sub_move(self, destination, location, team):
+        if location in team and self.is_valid(destination, location):
+            team.remove(location)
+            team.add(destination)
             return True
         return False
 
@@ -95,7 +98,7 @@ class Board(object): # pragma: no cover
     def get_all_valid_moves(self, team): # pragma: no cover
         valid = set()
         for piece in team[0]:
-            valid |= self.get_valid_moves(piece)
+            valid.add((piece, self.get_valid_moves(piece)))
         return valid
 
     # Returns the coordinates of each adjacent valid spot to move
