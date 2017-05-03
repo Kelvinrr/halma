@@ -12,5 +12,6 @@ class TestGame(unittest.TestCase):
         self.game = game.Halma(5, 10, 'r')
 
     def test_run_command(self):
-        assert self.game.run_command("a1->b2") == "Red's Turn"
+        print(self.game.board)
+        assert self.game.run_command("b2->c3") == "Red's Turn"
         assert self.game.run_command("a1->b2") == "Invalid Move"
