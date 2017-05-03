@@ -85,18 +85,18 @@ class Board(object): # pragma: no cover
 
     def get_neighbors(self, pos): # pragma: no cover
         ns = set()
-        x = pos[0]
-        y = pos[1]
         for i in range(-1,2):
             for j in range(-1,2):
-                if (not (i == 0 and j == 0)) and self.check_in_bounds((x+i,y+j)) and ((x + i, y + j) in (self.red_positions | self.green_positions)):
-                    ns.add((x+i,y+j))
+                nx = pos[0] + i
+                ny = pos[1] + j
+                if (not (i == 0 and j == 0)) and self.check_in_bounds((nx,ny)) and ((nx, ny) in (self.red_positions | self.green_positions)):
+                    ns.add((nx,ny))
         return ns
 
     def get_all_valid_moves(self, positions): # pragma: no cover
         valid = set()
         for piece in positions:
-            valid = valid | self.get_valid_moves(piece)
+            valid |= self.get_valid_moves(piece)
         return valid
 
     # Returns the coordinates of each adjacent valid spot to move
@@ -114,8 +114,8 @@ class Board(object): # pragma: no cover
                 if not (i == 0 and j == 0) and self.check_in_bounds((x+i,y+j)) and ((x + i, y + j) not in (self.red_positions | self.green_positions)):
                     adj_pos.add((x + i, y + j))
         jumps = self.get_jumps((x,y), set())
-        if jumps:
-            adj_pos = adj_pos | jumps
+        if jumps and len(jumps) > 1:
+            adj_pos |= jumps
         return adj_pos
 
     def is_valid(self, destination, location): # pragma: no cover
