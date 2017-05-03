@@ -53,8 +53,16 @@ class Halma(object): # pragma: no cover
         
         if (not src in team.pos) or not in_camp(src,dst,team) or (not self.board.move(dst, src, team)):
             return "Invalid Move"
+
+        root = self.ai.gen_tree(self.board.red.pos, self.board.green.pos, 1, False, ())
+        for child in root.children:
+            if child.score == root.score:
+                src, dest = child.move
+                self.board.move(dest, src, self.board.red)
+                break
+            
         
-        self.current_turn = 'r' if self.current_turn == 'g' else 'g'
+        # self.current_turn = 'r' if self.current_turn == 'g' else 'g'
         self.cycles += 1 if self.current_turn == 'g' else 0
 
         self.winner = self.board.winCheck()
