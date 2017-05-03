@@ -15,6 +15,11 @@ class Board(object): # pragma: no cover
         green_change = set()
         red_change = set()
 
+        self.red_goal = ()
+        self.green_goal = ()
+
+
+
         pieces = size // 2 + 1
         if size == 5:
             pieces = 5
@@ -27,6 +32,17 @@ class Board(object): # pragma: no cover
             row_len = i + pieces
             for j in range(row_len):
                 green_start.add((j, size + i))
+
+        if (0, self.size - 1) in red_start:
+            self.green_goal = (0, self.size)
+            self.red_goal = (self.size, 0)
+
+        elif (0, self.size - 1) in green_start:
+            self.red_goal = (0, self.size)
+            self.green_goal = (self.size, 0)
+
+        else:
+            raise Exception("Could not determine goal states.")
 
         if initial_board:
             red_positions = set()
@@ -143,3 +159,108 @@ class Board(object): # pragma: no cover
             cur_dist = ((cPos[0]-pos[0])**2 + (cPos[1]-pos[1])**2)**(1/2)
             dist = min(dist, cur_dist)
         return dist
+
+    def evaluation(self, point_one, point_two):
+
+        sumSquares = 0
+
+        for point in point_one:
+            sumSquares = sumSquares + (((point_two[0] - point[0])**2) + ((point_two[1] - point[1]))**2)
+
+        return sumSquares
+
+    def calculate_line(self, x, y):
+        #  P1(0, size) P2(size, 0)
+
+        x_diff = self.size - 1
+        y_diff = -(self.size - 1)
+
+        numerator = abs(y_diff*x - (x_diff*y) + ((self.size - 1)**2))
+        denominator = math.sqrt(y_diff**2 + x_diff**2)
+
+        distance = numerator/denominator
+
+        return distance
+
+
+
+    def dist_to_line(self, player):
+
+        sumLineSquare = 0
+
+        if(player == 'r'):
+
+            for point in self.red[0]:
+
+                minDist = 0
+
+                for move in self.get_valid_moves(point):
+
+                    if(minDist < self.calculate_line(move[0], move[1])):
+                        minDist = self.calculate_line(move[0], move[1])
+
+                distance = minDist
+                sumLineSquare += distance**2
+
+            return sumLineSquare
+
+        if(player == 'g'):
+
+            for point in self.green[0]:
+                distance = self.calculate_line(point[0], point[1])
+                sumLineSquare = distance ** 2
+
+            return sumLineSquare
+
+        else:
+            print("Invalid Player")
+
+    def distToGoal(self, player):
+
+        if (player == 'r'):
+            return self.evaluation(self.red[0], self.red_goal)
+
+        if (player == 'g'):
+            return self.evaluation(self.green[0], self.green_goal)
+
+    # Generates best min possible move and returns the sum of all of least min
+
+    def minDistToGoal(self, player):
+
+        sumLineSquare = 0
+
+        if (player == 'r'):
+
+            for point in self.red[0]:
+
+                minDist = 0
+
+                for move in self.get_valid_moves(point):
+
+                    if (minDist < self.calculate_line(move[0], move[1])):
+                        minDist = self.calculate_line(move[0], move[1])
+
+                distance = minDist
+                sumLineSquare = sumLineSquare + distance
+
+            return sumLineSquare
+
+        if (player == 'g'):
+
+            for point in self.green[0]:
+
+
+                minDist = 0
+
+                for move in self.get_valid_moves(point):
+
+                    if (minDist < self.calculate_line(move[0], move[1])):
+                        minDist = self.calculate_line(move[0], move[1])
+
+                distance = minDist
+                sumLineSquare = sumLineSquare + distance
+
+            return sumLineSquare
+
+        else:
+            print("Invalid Player")
