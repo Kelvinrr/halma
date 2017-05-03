@@ -53,7 +53,6 @@ class TestBoard(unittest.TestCase):
         assert test_board.green[0] == self.green_10x10_positions
         assert test_board.red[0] == self.red_10x10_positions
 
-
     def test_16x16(self):
         test_board = Board(16)
         assert test_board.green[0] == self.green_16x16_positions
