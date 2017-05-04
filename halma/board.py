@@ -84,15 +84,16 @@ class Board(object): # pragma: no cover
         return False
 
     def move(self, destination, location, team):
-        return self.sub_move(destination, location, team.pos)
+        return self.sub_move(destination, location, team, team.pos)
 
-    def sub_move(self, destination, location, team):
-        if location in team and self.is_valid(destination, location):
-            team.remove(location)
-            team.add(destination)
+    def sub_move(self, destination, location, team, team_pos):
+        if location in team_pos and self.is_valid(destination, location, team):
+            team_pos.remove(location)
+            team_pos.add(destination)
             return True
         return False
 
+    
     def check_in_bounds(self, pos): # pragma: no cover
         return pos[0] >= 0 and pos[1] >= 0 and pos[0] < self.size and pos[1] < self.size
 
@@ -118,11 +119,11 @@ class Board(object): # pragma: no cover
     def get_all_valid_moves(self, team): # pragma: no cover
         valid = set()
         for piece in team.pos:
-            valid.add((piece, self.get_valid_moves(piece)))
+            valid.add((piece, self.get_valid_moves(piece, team)))
         return valid
 
     # Returns the coordinates of each adjacent valid spot to move
-    def get_valid_moves(self, pos): # pragma: no cover
+    def get_valid_moves(self, pos, team): # pragma: no cover
         adj_pos = set()
         row_length = self.size
         col_length = self.size
@@ -134,15 +135,21 @@ class Board(object): # pragma: no cover
                 new_y = pos[1] + j
                 if not (i == 0 and j == 0) and self.check_in_bounds((new_x,new_y)) and ((new_x, new_y) not in (self.red[0] | self.green[0])):
                     adj_pos.add((new_x, new_y))
+                    
         jumps = self.get_jumps((pos[0],pos[1]), set())
         jumps.remove((pos[0],pos[1]))
         if jumps:
             adj_pos |= jumps
+        if pos in team.goal:
+            adj_pos &= team.goal
+        elif pos not in team.start:
+            adj_pos -= team.start
         return adj_pos
 
-    def is_valid(self, destination, location): # pragma: no cover
-        adj_positions = self.get_valid_moves((location[0], location[1]))
-        return not destination in (self.red[0] or self.green[0]) and destination in adj_positions
+    def is_valid(self, destination, location, team): # pragma: no cover
+        adj_positions = self.get_valid_moves((location[0], location[1]), team)
+        valid_camp = (destination not in team.start and location in team.start) or (destination in team.goal or location not in team.goal)
+        return not destination in (self.red[0] or self.green[0]) and destination in adj_positions and valid_camp
 
 
     def xyToCoord(self, x,y):

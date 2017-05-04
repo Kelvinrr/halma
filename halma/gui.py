@@ -108,8 +108,8 @@ class HalmaGUI(Frame): # pragma: no cover
             return report
 
         # AI TESTING STUFF HERE
-        self.team = board.green.pos
-        self.opp = board.red.pos
+        self.team = board.green
+        self.opp = board.red
         self.player = True
         def ai_play():
             src, dest = self.game.ai.get_optimal_move(1, self.team, self.opp, self.player)
