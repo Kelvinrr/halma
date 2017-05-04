@@ -11,7 +11,7 @@ class HalmaGUI(Frame): # pragma: no cover
         super().__init__(root)
         self.game = game
         self.root = root
-        self.pack(expand=YES,fill=BOTH)
+        self.pack(expand=YES, fill=BOTH)
         self._places = []
         self._banner = StringVar()
         self._banner.set("Game Start")
@@ -46,7 +46,6 @@ class HalmaGUI(Frame): # pragma: no cover
         def handle_label(x,y):
             def adjust_bg(widget, func):
                 widget.config(bg="#%02x%02x%02x" % tuple(map(func, widget.winfo_rgb(widget.cget("bg")))))
-
 
             def _handle_label(event):
                 label = (board.xyToCoord(x,y), event.widget)
@@ -110,7 +109,8 @@ class HalmaGUI(Frame): # pragma: no cover
         # AI TESTING STUFF HERE
         self.team = board.green
         self.opp = board.red
-        self.player = True
+        self.player = False
+
         def ai_play():
             if board.winCheck():
                 return
@@ -120,10 +120,10 @@ class HalmaGUI(Frame): # pragma: no cover
             temp = self.team
             self.team = self.opp
             self.opp = temp
-            self.player = not self.player
-            self.after(100,ai_play)
+            #self.player = not self.player
+            self.after(100, ai_play)
                 
-        self.after(100,ai_play)
+        self.after(2000, ai_play)
         # END AI TESTING STUFF
 
         entry = Entry(lower_frame)

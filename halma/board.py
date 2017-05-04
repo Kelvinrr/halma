@@ -1,7 +1,7 @@
 from collections import namedtuple
 import math
 
-Team = namedtuple('Team', ['pos', 'start','goal','player'])
+Team = namedtuple('Team', ['pos', 'start','goal','player', 'goalTile'])
 
 class Board(object): # pragma: no cover
     def __init__(self, size, initial_board=None):
@@ -17,14 +17,10 @@ class Board(object): # pragma: no cover
         green_change = set()
         red_change = set()
 
-        self.red_goal = ()
-        self.green_goal = ()
-
-
-
         pieces = size // 2 + 1
         if size == 5:
             pieces = 5
+
         for i in range(-pieces + 1, 0):
             row_len = i + pieces
             for j in range(row_len):
@@ -35,16 +31,8 @@ class Board(object): # pragma: no cover
             for j in range(row_len):
                 green_start.add((j, size + i))
 
-        if (0, self.size - 1) in red_start:
-            self.green_goal = (0, self.size)
-            self.red_goal = (self.size, 0)
-
-        elif (0, self.size - 1) in green_start:
-            self.red_goal = (0, self.size)
-            self.green_goal = (self.size, 0)
-
-        else:
-            raise Exception("Could not determine goal states.")
+        red_goal_p = (0, self.size-1) if (self.size-1, 0) in red_start else (self.size-1, 0)
+        green_goal_p = (red_goal_p[1], red_goal_p[0])
 
         if initial_board:
             red_positions = set()
@@ -52,15 +40,15 @@ class Board(object): # pragma: no cover
             for y in range(self.size):
                 for x in range(self.size):
                     if initial_board[y][x] == 'g':
-                        green_positions.add((x,y))
+                        green_positions.add((x, y))
                     elif initial_board[y][x] == 'r':
-                        red_positions.add((x,y))
-        else :
+                        red_positions.add((x, y))
+        else:
             red_positions = red_start.copy()
             green_positions = green_start.copy()
 
-        self.red = Team(red_positions, red_start, green_start, 'r')
-        self.green = Team(green_positions, green_start, red_start, 'g')
+        self.red = Team(red_positions, red_start, green_start, 'r', red_goal_p)
+        self.green = Team(green_positions, green_start, red_start, 'g', green_goal_p)
 
     def __str__(self): # pragma: no cover
         string = ''
@@ -220,6 +208,19 @@ class Board(object): # pragma: no cover
 
     # Generates best min possible move and returns the sum of all of least min
 
+    # TEMP H-FUNCTION FOR TESTING!
+    def minDistToGoalPoint(self, team, team_pos):
+
+        def eval_dist(p1, p2):
+            return (p2[0] - p1[0])**2 + (p2[1] - p1[1])**2
+
+        sumLineSquare = 0
+        for piece in team_pos:
+            sumLineSquare += eval_dist(piece, team.goalTile)
+
+        return 1/math.sqrt(sumLineSquare) if sumLineSquare != 0 else 2
+
+
     def minDistToGoal(self, player):
 
         sumLineSquare = 0
@@ -231,7 +232,7 @@ class Board(object): # pragma: no cover
                         minDist = self.calculate_line(move[0], move[1])
                 distance = minDist
                 sumLineSquare = sumLineSquare + distance
-            return sumLineSquare
+            return 1/sumLineSquare if sumLineSquare != 0 else 0
 
         if (player == 'g'):
             for point in self.green[0]:
