@@ -7,7 +7,6 @@ class AI(object):
         self.board = board
     
     def gen_tree(self, depth, team_pos, opp_pos, maxNode, team_info, opp_info, move, prune, alpha):
-        print(maxNode)
         children = []
         if maxNode:
             teams = (team_pos, opp_pos)
@@ -23,14 +22,12 @@ class AI(object):
         if not depth == 0:
             for src in team_pos:
                 for dest in self.board.get_valid_moves(src, team_info):
-                    print(src, dest)
                     teamC = team_pos.copy()
                     self.board.sub_move(dest, src, team_info, teamC)
                     child = self.gen_tree(depth - 1, opp_pos, teamC, not maxNode, opp_info, team_info, (src, dest), prune, score)
                     children.append(child)
                     score = minimax(score, child.score) 
                     if prune and self.compare(score, alpha) == compVal:
-                        print("Pruning")
                         return Tree(teams, score, children, move)
         else:
             score = self.board.minDistToGoalPoint(team_info, team_pos) if maxNode\
@@ -45,10 +42,7 @@ class AI(object):
     
     def get_optimal_move(self, depth, team, opp, max_root, alpha_beta):
         root = self.gen_tree(depth, team.pos, opp.pos, max_root, team, opp, (), alpha_beta, 0 if max_root else float('inf'))
-        print(root)
         for child in root.children:
             if child.score == root.score:
-                print(child)
-                print(child.move)
                 return child.move
         
