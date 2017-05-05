@@ -107,20 +107,18 @@ class HalmaGUI(Frame): # pragma: no cover
             return report
 
         # AI TESTING STUFF HERE
-        self.team = board.green
-        self.opp = board.red
+        self.team_turn = False
+        self.teams = [board.green,board.red]
+        self.hFuncs = [board.randomGoal, board.maxDistToGoal]
 
         def ai_play():
             if board.winCheck():
                 return
 
-            self.game.ai.get_optimal_move(1, self.team, self.opp, True, True)
-            src, dest = self.game.ai.get_optimal_move(1, self.team, self.opp, True, True)
+            src, dest = self.game.ai.get_optimal_move(1, self.teams[self.team_turn], self.teams[not self.team_turn], True, True, self.hFuncs[self.team_turn])
+            self.team_turn = not self.team_turn
             cmd = board.moveToString(src, dest)
             handle_command(cmd)
-            temp = self.team
-            self.team = self.opp
-            self.opp = temp
             self.after(100, ai_play)
 
         self.after(1000, ai_play)
