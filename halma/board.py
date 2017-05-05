@@ -184,25 +184,27 @@ class Board(object): # pragma: no cover
         return distance
 
 
-    def dist_to_line(self, player):
-        sumLineSquare = 0
-        if(player == 'r'):
-            for point in self.red[0]:
-                minDist = 0
-                for move in self.get_valid_moves(point):
-                    if(minDist < self.calculate_line(move[0], move[1])):
-                        minDist = self.calculate_line(move[0], move[1])
-                distance = minDist
-                sumLineSquare += distance**2
-            return sumLineSquare
-
-        if(player == 'g'):
-            for point in self.green[0]:
-                distance = self.calculate_line(point[0], point[1])
-                sumLineSquare = distance ** 2
-            return sumLineSquare
-        else:
-            print("Invalid Player")
+    def dist_to_line(self, team, team_pos, opp_pos):
+        score = utils.line_score(team_pos, self.red.goalTile, self.green.goalTile)
+        return 1/math.sqrt(score) if score != 0 else 2
+        # sumLineSquare = 0
+        # if(player == 'r'):
+        #     for point in self.red[0]:
+        #         minDist = 0
+        #         for move in self.get_valid_moves(point):
+        #             if(minDist < self.calculate_line(move[0], move[1])):
+        #                 minDist = self.calculate_line(move[0], move[1])
+        #         distance = minDist
+        #         sumLineSquare += distance**2
+        #     return sumLineSquare
+        #
+        # if(player == 'g'):
+        #     for point in self.green[0]:
+        #         distance = self.calculate_line(point[0], point[1])
+        #         sumLineSquare = distance ** 2
+        #     return sumLineSquare
+        # else:
+        #     print("Invalid Player")
 
 
     def distToGoal(self, player):
@@ -224,31 +226,10 @@ class Board(object): # pragma: no cover
 
         return 1/math.sqrt(sumLineSquare) if sumLineSquare != 0 else 2
 
+    def num_pieces_in_goal(self, team, team_pos, opp_pos):
+        num = len([pos for pos in team_pos if team_pos in team.goal])
+        return num * 1000
 
     def maxDistToGoal(self, team, team_pos, opp_pos):
-        camp = utils.filter_camp(team, team_pos, opp_pos)
-        print(utils.camp_score(team_pos, camp))
-        return utils.camp_score(team_pos, camp)
-
-        # sumLineSquare = 0
-        # if (player == 'r'):
-        #     for point in self.red[0]:
-        #         minDist = 0
-        #         for move in self.get_valid_moves(point):
-        #             if (minDist < self.calculate_line(move[0], move[1])):
-        #                 minDist = self.calculate_line(move[0], move[1])
-        #         distance = minDist
-        #         sumLineSquare = sumLineSquare + distance
-        #     return 1/sumLineSquare if sumLineSquare != 0 else 0
-        #
-        # if (player == 'g'):
-        #     for point in self.green[0]:
-        #         minDist = 0
-        #         for move in self.get_valid_moves(point):
-        #             if (minDist < self.calculate_line(move[0], move[1])):
-        #                 minDist = self.calculate_line(move[0], move[1])
-        #         distance = minDist
-        #         sumLineSquare = sumLineSquare + distance
-        #     return sumLineSquare
-        # else:
-        #     print("Invalid Player")
+        score = utils.camp_score(team_pos,utils.filter_camp(team, team_pos, opp_pos))
+        return 1/math.sqrt(score) if score != 0 else 2

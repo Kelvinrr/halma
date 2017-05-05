@@ -28,10 +28,10 @@ class AI(object):
         else:
             playerRep = 'g' if player else 'r'
             print(playerRep)
-            score = self.board.minDistToGoalPoint(opp_info, opp_pos) if player\
-                else self.board.minDistToGoalPoint(team_info, team_pos)
+            score = 2*self.board.maxDistToGoal(opp_info, opp_pos, team_pos) - self.board.dist_to_line(opp_info,opp_pos,team_pos) if player \
+                else 1
             # score = self.board.dist_to_line(playerRep) + self.board.distToGoal(playerRep) + self.board.minDistToGoal(playerRep)
-
+            player = not player
 
         return Tree(teams, score, children, move)
 
