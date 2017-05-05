@@ -22,5 +22,5 @@ class TestAI(unittest.TestCase):
 
     def test_optimal(self):
 
-        src, dest = self.ai.get_optimal_move(1,self.board.green, self.board.red, False, True)
+        src, dest = self.ai.get_optimal_move(1,self.board.red, self.board.green, True, True)
         assert src == (2,2) and dest == (0,4)
