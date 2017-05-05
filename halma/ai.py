@@ -2,7 +2,6 @@ from halma.board import Board
 from halma.tree import Tree
 import random
 
-
 class AI(object):
     def __init__(self, board):
         self.board = board
@@ -24,7 +23,6 @@ class AI(object):
                     teamC = team_pos.copy()
                     self.board.sub_move(dest, src, team_info, teamC)
                     child = self.gen_tree(depth - 1, opp_pos, teamC, not player, opp_info, team_info, (src, dest))
-                    child_score = child.score
                     score = minimax(score, child.score) 
                     children.append(child)
         else:
@@ -58,10 +56,8 @@ class AI(object):
                     teamC = team_pos.copy()
                     self.board.sub_move(dest, src, team_info, teamC)
                     child = self.gen_tree_ab(depth - 1, opp_pos, teamC, not player, opp_info, team_info, (src, dest), score)
-                    child_score = child.score
                     score = minimax(score, child.score)
                     if self.compare(score, alpha) == compVal:
-                        print("Pruned Tree")
                         return Tree(teams, score, children, move)
                     children.append(child)
         else:
@@ -84,4 +80,3 @@ class AI(object):
         for child in root.children:
             if child.score == root.score:
                 return child.move
-        
