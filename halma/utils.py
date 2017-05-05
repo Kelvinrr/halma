@@ -28,12 +28,10 @@ def camp_score(points, camp):
 
 def filter_camp(player, *args):
     ret = player.goal - set.union(*args)
-    print(ret)
     return ret if ret else [player.goalTile]
 
 def line_score(points, team_goal, opp_goal ):
     points,team_goal,opp_goal = np.asarray(list(points)), np.asarray(list(team_goal)), np.asarray(list(opp_goal))
-    print(points)
     def dist_to_line(P):
         """ segment line AB, point P, where each one is an array([x, y]) """
         A = team_goal
@@ -44,7 +42,6 @@ def line_score(points, team_goal, opp_goal ):
             return norm(P - A)
         if arccos(dot((P - B) / norm(P - B), (A - B) / norm(A - B))) > pi / 2:
             return norm(P - B)
-        print(abs(dot(A - B, P[::-1]) + det([A, B])) / norm(A - B))
         return abs(dot(A - B, P[::-1]) + det([A, B])) / norm(A - B)
 
     return np.sum(np.apply_along_axis(dist_to_line, 1, points)**2)
