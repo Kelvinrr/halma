@@ -1,5 +1,10 @@
 from collections import namedtuple
+from halma import utils
+
+import random as rand
+import numpy as np
 import math
+
 
 Team = namedtuple('Team', ['pos', 'start','goal','player', 'goalTile'])
 
@@ -81,7 +86,7 @@ class Board(object): # pragma: no cover
             return True
         return False
 
-    
+
     def check_in_bounds(self, pos): # pragma: no cover
         return pos[0] >= 0 and pos[1] >= 0 and pos[0] < self.size and pos[1] < self.size
 
@@ -123,7 +128,7 @@ class Board(object): # pragma: no cover
                 new_y = pos[1] + j
                 if not (i == 0 and j == 0) and self.check_in_bounds((new_x,new_y)) and ((new_x, new_y) not in (self.red[0] | self.green[0])):
                     adj_pos.add((new_x, new_y))
-                    
+
         jumps = self.get_jumps((pos[0],pos[1]), set())
         jumps.remove((pos[0],pos[1]))
         if jumps:
@@ -179,7 +184,6 @@ class Board(object): # pragma: no cover
         return distance
 
 
-
     def dist_to_line(self, player):
         sumLineSquare = 0
         if(player == 'r'):
@@ -200,6 +204,7 @@ class Board(object): # pragma: no cover
         else:
             print("Invalid Player")
 
+
     def distToGoal(self, player):
         if (player == 'r'):
             return self.evaluation(self.red[0], self.red_goal)
@@ -210,7 +215,6 @@ class Board(object): # pragma: no cover
 
     # TEMP H-FUNCTION FOR TESTING!
     def minDistToGoalPoint(self, team, team_pos):
-
         def eval_dist(p1, p2):
             return (p2[0] - p1[0])**2 + (p2[1] - p1[1])**2
 
@@ -222,26 +226,35 @@ class Board(object): # pragma: no cover
 
 
     def minDistToGoal(self, player):
-
-        sumLineSquare = 0
-        if (player == 'r'):
-            for point in self.red[0]:
-                minDist = 0
-                for move in self.get_valid_moves(point):
-                    if (minDist < self.calculate_line(move[0], move[1])):
-                        minDist = self.calculate_line(move[0], move[1])
-                distance = minDist
-                sumLineSquare = sumLineSquare + distance
-            return 1/sumLineSquare if sumLineSquare != 0 else 0
-
-        if (player == 'g'):
-            for point in self.green[0]:
-                minDist = 0
-                for move in self.get_valid_moves(point):
-                    if (minDist < self.calculate_line(move[0], move[1])):
-                        minDist = self.calculate_line(move[0], move[1])
-                distance = minDist
-                sumLineSquare = sumLineSquare + distance
-            return sumLineSquare
+        if player == 'r':
+            for pos in self.red.pos:
+                camp = utils.filter_camp(self.red.goal, self.red.pos, self.green.pos)
+                print(utils.camp_score(self.red.pos, camp))
+                return utils.camp_score(self.red.pos, camp)
+        if player == 'g':
+            return rand.randint(1000)
         else:
             print("Invalid Player")
+
+        # sumLineSquare = 0
+        # if (player == 'r'):
+        #     for point in self.red[0]:
+        #         minDist = 0
+        #         for move in self.get_valid_moves(point):
+        #             if (minDist < self.calculate_line(move[0], move[1])):
+        #                 minDist = self.calculate_line(move[0], move[1])
+        #         distance = minDist
+        #         sumLineSquare = sumLineSquare + distance
+        #     return 1/sumLineSquare if sumLineSquare != 0 else 0
+        #
+        # if (player == 'g'):
+        #     for point in self.green[0]:
+        #         minDist = 0
+        #         for move in self.get_valid_moves(point):
+        #             if (minDist < self.calculate_line(move[0], move[1])):
+        #                 minDist = self.calculate_line(move[0], move[1])
+        #         distance = minDist
+        #         sumLineSquare = sumLineSquare + distance
+        #     return sumLineSquare
+        # else:
+        #     print("Invalid Player")
