@@ -34,7 +34,6 @@ class AI(object):
                 else self.board.minDistToGoalPoint(opp_info, opp_pos)
             # score = self.board.dist_to_line(playerRep) + self.board.distToGoal(playerRep) + self.board.minDistToGoal(playerRep)
 
-
         return Tree(teams, score, children, move)
 
     def compare(self, a,b):
