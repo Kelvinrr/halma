@@ -225,16 +225,10 @@ class Board(object): # pragma: no cover
         return 1/math.sqrt(sumLineSquare) if sumLineSquare != 0 else 2
 
 
-    def minDistToGoal(self, player):
-        if player == 'r':
-            for pos in self.red.pos:
-                camp = utils.filter_camp(self.red.goal, self.red.pos, self.green.pos)
-                print(utils.camp_score(self.red.pos, camp))
-                return utils.camp_score(self.red.pos, camp)
-        if player == 'g':
-            return rand.randint(1000)
-        else:
-            print("Invalid Player")
+    def maxDistToGoal(self, team, team_pos, opp_pos):
+        camp = utils.filter_camp(team, team_pos, opp_pos)
+        print(utils.camp_score(team_pos, camp))
+        return utils.camp_score(team_pos, camp)
 
         # sumLineSquare = 0
         # if (player == 'r'):

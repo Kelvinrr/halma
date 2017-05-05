@@ -34,9 +34,6 @@ class Halma(object): # pragma: no cover
         """
         commands must be in the format "b6->c7"
         """
-        def in_camp(to, frm, team):
-            return to in team.goal or not frm in team.goal
-
         if not cmd:
             return 'Empty Command'
 
@@ -52,14 +49,11 @@ class Halma(object): # pragma: no cover
         dst = self.board.coordToXY(dst)
         team = self.board.green if self.current_turn == 'g' else self.board.red
 
-        if (not src in team.pos) or not in_camp(src,dst,team) or (not self.board.move(dst, src, team)):
+        if (src not in team.pos) or (not self.board.move(dst, src, team)):
             return "Invalid Move"
 
-        src, dest = self.ai.get_optimal_move(1, self.board.red.pos, self.board.green.pos, False)
-        self.board.move(dest, src, self.board.red)
 
-        # self.current_turn = 'r' if self.current_turn == 'g' else 'g'
-
+        self.current_turn = 'r' if self.current_turn == 'g' else 'g'
         self.cycles += 1 if self.current_turn == 'g' else 0
 
         self.winner = self.board.winCheck()
