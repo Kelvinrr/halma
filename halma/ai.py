@@ -45,4 +45,4 @@ class AI(object):
         for child in root.children:
             if child.score == root.score:
                 return child.move
-        
+        return ((0,0),(0,0))
