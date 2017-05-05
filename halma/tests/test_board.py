@@ -65,11 +65,11 @@ class TestBoard(unittest.TestCase):
     def test_wincheck(self):
         test_board = Board(5)
         assert not test_board.winCheck()
-        test_board.green = Team(pos = test_board.green.goal, start = test_board.green.start, goal = test_board.green.goal, player = test_board.green.player)
+        test_board.green = Team(pos = test_board.green.goal, start = test_board.green.start, goal = test_board.green.goal, player = test_board.green.player, goalTile=(0,0))
         print(test_board.winCheck())
         assert test_board.winCheck() == 'g'
-        test_board.green = Team(pos = test_board.green.start, start = test_board.green.start, goal = test_board.green.goal, player = test_board.green.player)
-        test_board.red = Team(pos = test_board.red.goal, start = test_board.red.start, goal = test_board.red.goal, player = test_board.red.player)
+        test_board.green = Team(pos = test_board.green.start, start = test_board.green.start, goal = test_board.green.goal, player = test_board.green.player, goalTile=(0,0))
+        test_board.red = Team(pos = test_board.red.goal, start = test_board.red.start, goal = test_board.red.goal, player = test_board.red.player, goalTile=(0,0))
         assert test_board.winCheck() == 'r'
 
     def test_xyToCoord(self):

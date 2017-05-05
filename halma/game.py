@@ -13,7 +13,7 @@ class Halma(object): # pragma: no cover
         self.time = time
         self.player = player
         self.current_turn = 'g'
-        self.regExp = re.compile('[a-z]{1}\d{1}->[a-z]{1}\d{1}')
+        self.regExp = re.compile('[a-z]{1}\d{1,2}->[a-z]{1}\d{1,2}')
         self.cycles = 0
 
     def get_win_stats(self):
