@@ -8,6 +8,9 @@ from .. import board
 from .. import game
 from .. import ai
 
+Board = board.Board
+AI = ai.AI
+
 class TestAI(unittest.TestCase):
     def setUp(self):
         self.board = Board(5)
@@ -18,6 +21,6 @@ class TestAI(unittest.TestCase):
         self.ai = AI(self.board)
 
     def test_optimal(self):
-        src, dest = self.ai.get_optimal_move(1, self.board.red.pos, self.board.green.pos, False)
-        # assert src == (2,2) and dest == (0,4)
-        assert True
+
+        src, dest = self.ai.get_optimal_move(1,self.board.green, self.board.red, False, True)
+        assert src == (2,2) and dest == (0,4)
