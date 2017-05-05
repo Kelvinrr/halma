@@ -3,6 +3,7 @@ from tkinter import *
 import random
 from halma.board import Board
 from halma.ai import AI
+from time import sleep
 
 class Halma(object): # pragma: no cover
     def __init__(self, size, time, player, initial_board=None):
@@ -19,15 +20,15 @@ class Halma(object): # pragma: no cover
         if not self.winner:
             return None
         red_score = 0
-        for red in self.board.red_positions:
-            p_score = self.board.calcDistToGoal(red, self.board.green_start)
-            red_score += 1/p_score if p_score != 0 else 1
+        scores = [0,0]
+        teams = [self.board.green, self.board.red]
+        for i in range(2):
+            team = teams[i]
+            for pos in team.pos:
+                p_score = self.board.calcDistToGoal(pos, team.goal)
+                scores[i] += 1/p_score if p_score != 0 else 1
 
-        green_score = 0
-        for green in self.board.green_positions:
-            p_score = self.board.calcDistToGoal(green, self.board.red_start)
-            green_score += 1/p_score if p_score != 0 else 1
-        return (self.cycles, green_score, red_score)
+        return (self.cycles, scores[0], scores[1])
 
     def run_command(self, cmd):
         """
