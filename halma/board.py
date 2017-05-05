@@ -149,7 +149,7 @@ class Board(object): # pragma: no cover
 
     def coordToXY(self, coord):
         coord = coord.strip().lower()
-        return (ord(coord[0])-97, self.size - int(coord[1]))
+        return (ord(coord[0])-97, self.size - int(coord[1:]))
 
     def moveToString(self, src, dest):
         return self.xyToCoord(src[0],src[1]) + "->" + self.xyToCoord(dest[0], dest[1])
@@ -216,9 +216,12 @@ class Board(object): # pragma: no cover
 
         sumLineSquare = 0
         for piece in team_pos:
-            sumLineSquare += eval_dist(piece, team.goalTile)
-
-        return 1/math.sqrt(sumLineSquare) if sumLineSquare != 0 else 2
+            bonus = 5 if piece in team.goal else 0
+            dist = eval_dist(piece, team.goalTile)
+            if dist == 0:
+                dist = 0.5
+            sumLineSquare += 1/dist + bonus
+        return sumLineSquare
 
 
     def minDistToGoal(self, player):
