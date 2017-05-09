@@ -17,6 +17,7 @@ class HalmaGUI(Frame): # pragma: no cover
         self._banner.set("Game Start")
         self._cur_move = ""
         self._last_move = None
+
         board = game.board
         board_size = board.size
 

@@ -13,7 +13,6 @@ class Board(object): # pragma: no cover
         if not isinstance(size, int):
             raise Exception("Width and height must both be integers, got: {} {}"
                             .format(type(size), type(size)))
-
         self.size = size
 
         red_start = set()
@@ -29,12 +28,12 @@ class Board(object): # pragma: no cover
         for i in range(-pieces + 1, 0):
             row_len = i + pieces
             for j in range(row_len):
-                red_start.add((size + i, j))
+                red_start.add((size + i, size-j-1))
 
         for i in range(-pieces + 1, 0):
             row_len = i + pieces
             for j in range(row_len):
-                green_start.add((j, size + i))
+                green_start.add((j, -i-1))
 
         red_goal_p = (0, self.size-1) if (self.size-1, 0) in red_start else (self.size-1, 0)
         green_goal_p = (red_goal_p[1], red_goal_p[0])
@@ -235,11 +234,7 @@ class Board(object): # pragma: no cover
 
     def maxDistToGoal(self, team, team_pos, opp_pos):
         score = utils.camp_score(team_pos,utils.filter_camp(team, team_pos, opp_pos))
-<<<<<<< HEAD
-        return 1/score if score != 0 else .0001
-=======
         return 1/math.sqrt(score) if score != 0 else 2
 
     def randomGoal(self, team, team_pos, opp_pos):
         return rand.randint(0, 100)
->>>>>>> 6fd06228ceadd5775ded5d1db33daa6216e73bb6
