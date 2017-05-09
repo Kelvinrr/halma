@@ -235,4 +235,11 @@ class Board(object): # pragma: no cover
 
     def maxDistToGoal(self, team, team_pos, opp_pos):
         score = utils.camp_score(team_pos,utils.filter_camp(team, team_pos, opp_pos))
+<<<<<<< HEAD
         return 1/score if score != 0 else .0001
+=======
+        return 1/math.sqrt(score) if score != 0 else 2
+
+    def randomGoal(self, team, team_pos, opp_pos):
+        return rand.randint(0, 100)
+>>>>>>> 6fd06228ceadd5775ded5d1db33daa6216e73bb6
