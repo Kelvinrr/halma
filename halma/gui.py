@@ -114,7 +114,7 @@ class HalmaGUI(Frame): # pragma: no cover
             if board.winCheck():
                 return
 
-            self.game.ai.get_optimal_move(1, self.team, self.opp, True, True)
+            # self.game.ai.get_optimal_move(1, self.team, self.opp, True, True)
             src, dest = self.game.ai.get_optimal_move(1, self.team, self.opp, True, True)
             cmd = board.moveToString(src, dest)
             handle_command(cmd)

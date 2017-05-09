@@ -186,7 +186,7 @@ class Board(object): # pragma: no cover
 
     def dist_to_line(self, team, team_pos, opp_pos):
         score = utils.line_score(team_pos, self.red.goalTile, self.green.goalTile)
-        return 1/math.sqrt(score) if score != 0 else 2
+        return 1/math.sqrt(score) if score != 0 else 1
         # sumLineSquare = 0
         # if(player == 'r'):
         #     for point in self.red[0]:
@@ -230,9 +230,9 @@ class Board(object): # pragma: no cover
         return sumLineSquare
 
     def num_pieces_in_goal(self, team, team_pos, opp_pos):
-        num = len([pos for pos in team_pos if team_pos in team.goal])
-        return num * 1000
+        num = len([pos for pos in team_pos if pos in team.goal])
+        return num * 100
 
     def maxDistToGoal(self, team, team_pos, opp_pos):
         score = utils.camp_score(team_pos,utils.filter_camp(team, team_pos, opp_pos))
-        return 1/math.sqrt(score) if score != 0 else 2
+        return 1/score if score != 0 else .0001

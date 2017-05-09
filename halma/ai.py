@@ -21,6 +21,7 @@ class AI(object):
 
         if not depth == 0:
             for src in team_pos:
+                # print(self.board.xyToCoord(src[0], src[1]), ":",[self.board.xyToCoord(move[0], move[1]) for move in self.board.get_valid_moves(src, team_info)])
                 for dest in self.board.get_valid_moves(src, team_info):
                     teamC = team_pos.copy()
                     self.board.sub_move(dest, src, team_info, teamC)
@@ -30,10 +31,8 @@ class AI(object):
                     if prune and self.compare(score, alpha) == compVal:
                         return Tree(teams, score, children, move)
         else:
-            score = self.board.minDistToGoalPoint(team_info, team_pos) if maxNode\
-                else self.board.minDistToGoalPoint(opp_info, opp_pos)
+            score = 4*self.board.maxDistToGoal(opp_info, opp_pos, team_pos) + self.board.num_pieces_in_goal(opp_info, opp_pos, team_pos)
             # score = self.board.dist_to_line(playerRep) + self.board.distToGoal(playerRep) + self.board.minDistToGoal(playerRep)
-
         return Tree(teams, score, children, move)
 
     def compare(self, a,b):
