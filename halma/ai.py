@@ -55,10 +55,10 @@ class AI(object):
         except ValueError:
             pass
         print("Depth: {} Taken {}".format(deepest_depth, time.time() - cur_time))
-        print("Alpha beta nodes: {}".format(nodes))
+        print("Alpha beta leaf nodes: {}".format(nodes))
         nodes = 0
         root = self.gen_tree(depth, team.pos, opp.pos, max_root, team, opp, (), False, 0 if max_root else float('inf'), evalFunc, cur_time, max_time)
-        print("No Alpha beta nodes: {}".format(nodes))
+        print("Non-Alpha beta leaf nodes: {}".format(nodes))
         
         for child in root.children:
             if child.score == root.score:
