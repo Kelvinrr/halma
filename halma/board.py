@@ -35,11 +35,9 @@ class Board(object): # pragma: no cover
             for j in range(row_len):
                 green_start.add((j, -i-1))
 
-
-        print(green_start)
-        print(red_start)
-        red_goal_p = (0, self.size-1) if (self.size-1, 0) in red_start else (self.size-1, 0)
-        green_goal_p = (red_goal_p[1], red_goal_p[0])
+        goal_pos = [(0,0),(self.size-1,self.size-1)]
+        red_goal_p = goal_pos[goal_pos[0] in red_start]
+        green_goal_p = goal_pos[goal_pos[0] in green_start]
 
         if initial_board:
             red_positions = set()
