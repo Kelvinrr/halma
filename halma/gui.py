@@ -111,19 +111,18 @@ class HalmaGUI(Frame): # pragma: no cover
         # AI TESTING STUFF HERE
         self.team_turn = not self.game.ai_team == board.green
         self.teams = [board.green, board.red]
-        self.hFuncs = [board.randomGoal, board.value_func]
+        self.hFuncs = [board.value_func, board.value_func]
 
         def ai_play():
-            if board.winCheck() or self.game.current_turn != self.game.ai_team.player:
+            if board.winCheck():
                 return
 
             src, dest = self.game.ai.get_optimal_move(1, self.teams[self.team_turn], self.teams[not self.team_turn], True, True, self.hFuncs[self.team_turn])
-            # self.team_turn = not self.team_turn
+            self.team_turn = not self.team_turn
             cmd = board.moveToString(src, dest)
             handle_command(cmd)
-            #self.after(100, ai_play)
+            self.after(100, ai_play)
         self.after(1, ai_play)
-        # self.after(1000, ai_play)
         # END AI TESTING STUFF
 
         entry = Entry(lower_frame)
