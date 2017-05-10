@@ -31,7 +31,7 @@ class AI(object):
                     if prune and self.compare(score, alpha) == compVal:
                         return Tree(teams, score, children, move)
         else:
-            score = evalFunc(team_info, team_pos, opp_pos) if maxNode else evalFunc(opp_info, opp_pos, team_pos)
+            score = evalFunc(opp_info, opp_pos, team_pos)
             #score = self.board.minDistToGoalPoint(team_info, team_pos) if maxNode\
                 #else self.board.minDistToGoalPoint(opp_info, opp_pos)
             # score = self.board.dist_to_line(playerRep) + self.board.distToGoal(playerRep) + self.board.minDistToGoal(playerRep)

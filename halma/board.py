@@ -35,6 +35,9 @@ class Board(object): # pragma: no cover
             for j in range(row_len):
                 green_start.add((j, -i-1))
 
+
+        print(green_start)
+        print(red_start)
         red_goal_p = (0, self.size-1) if (self.size-1, 0) in red_start else (self.size-1, 0)
         green_goal_p = (red_goal_p[1], red_goal_p[0])
 
@@ -238,3 +241,6 @@ class Board(object): # pragma: no cover
 
     def randomGoal(self, team, team_pos, opp_pos):
         return rand.randint(0, 100)
+
+    def value_func(self, team, team_pos, opp_pos):
+        return self.maxDistToGoal(team, team_pos, opp_pos) + self.num_pieces_in_goal(team, team_pos, opp_pos)

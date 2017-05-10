@@ -52,7 +52,6 @@ class Halma(object): # pragma: no cover
         if (src not in team.pos) or (not self.board.move(dst, src, team)):
             return "Invalid Move"
 
-
         self.current_turn = 'r' if self.current_turn == 'g' else 'g'
         self.cycles += 1 if self.current_turn == 'g' else 0
 
