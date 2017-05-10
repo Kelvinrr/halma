@@ -15,7 +15,7 @@ class Halma(object): # pragma: no cover
         self.current_turn = 'g'
         self.regExp = re.compile('[a-z]{1}\d{1,2}->[a-z]{1}\d{1,2}')
         self.cycles = 0
-        self.ai_team = self.board.green if self.current_turn == 'g' else self.board.red
+        self.ai_team = self.board.green if player != 'g' else self.board.red
 
     def get_win_stats(self):
         if not self.winner:
