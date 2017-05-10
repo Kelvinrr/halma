@@ -114,11 +114,11 @@ class HalmaGUI(Frame): # pragma: no cover
         self.hFuncs = [board.value_func, board.value_func]
 
         def ai_play():
-            if board.winCheck():
+            if board.winCheck() or self.game.current_turn != self.game.ai_team.player:
                 return
-
+            
             src, dest = self.game.ai.get_optimal_move(1, self.teams[self.team_turn], self.teams[not self.team_turn], True, True, self.hFuncs[self.team_turn])
-            self.team_turn = not self.team_turn
+            # self.team_turn = not self.team_turn
             cmd = board.moveToString(src, dest)
             handle_command(cmd)
             self.after(100, ai_play)
