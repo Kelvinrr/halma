@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 from halma.board import Board
 from halma.game import Halma
@@ -112,17 +113,20 @@ class HalmaGUI(Frame): # pragma: no cover
         self.team_turn = not self.game.ai_team == board.green
         self.teams = [board.green, board.red]
         self.hFuncs = [board.value_func, board.value_func]
-
+        ai_vs = True
+        if ai_vs:
+            self.team_turn = not self.team_turn
         def ai_play():
-            if board.winCheck() or self.game.current_turn != self.game.ai_team.player:
+            if board.winCheck() or (self.game.current_turn != self.game.ai_team.player and not ai_vs):
                 return
             
-            src, dest = self.game.ai.get_optimal_move(1, self.teams[self.team_turn], self.teams[not self.team_turn], True, True, self.hFuncs[self.team_turn])
-            # self.team_turn = not self.team_turn
+            src, dest = self.game.ai.get_optimal_move(3, self.teams[self.team_turn], self.teams[not self.team_turn], True, True, self.hFuncs[self.team_turn], time.time(), self.game.time)
+            if ai_vs:
+                self.team_turn = not self.team_turn
             cmd = board.moveToString(src, dest)
             handle_command(cmd)
-            self.after(100, ai_play)
-        self.after(1, ai_play)
+            self.after(1, ai_play)
+        self.after(1000, ai_play)
         # END AI TESTING STUFF
 
         entry = Entry(lower_frame)

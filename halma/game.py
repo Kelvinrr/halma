@@ -10,7 +10,7 @@ class Halma(object): # pragma: no cover
         self.board = Board(size, initial_board=initial_board)
         self.ai = AI(self.board)
         self.winner = None
-        self.time = time
+        self.time = time - 0.1
         self.player = player
         self.current_turn = 'g'
         self.regExp = re.compile('[a-z]{1}\d{1,2}->[a-z]{1}\d{1,2}')

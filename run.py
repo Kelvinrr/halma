@@ -28,7 +28,7 @@ if __name__ == "__main__": # pragma : no cover
         basic_board = None
         if args["board"]:
             basic_board = build_board(open(args["board"],'r'))
-            if len(basic_board) != int(args["board"]):
+            if len(basic_board) != int(args["size"]):
                     print("Size of passed board incorrect")
 
         root = Tk()

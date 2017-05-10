@@ -86,7 +86,6 @@ class Board(object): # pragma: no cover
             return True
         return False
 
-
     def check_in_bounds(self, pos): # pragma: no cover
         return pos[0] >= 0 and pos[1] >= 0 and pos[0] < self.size and pos[1] < self.size
 
@@ -187,25 +186,6 @@ class Board(object): # pragma: no cover
     def dist_to_line(self, team, team_pos, opp_pos):
         score = utils.line_score(team_pos, self.red.goalTile, self.green.goalTile)
         return 1/math.sqrt(score) if score != 0 else 1
-        # sumLineSquare = 0
-        # if(player == 'r'):
-        #     for point in self.red[0]:
-        #         minDist = 0
-        #         for move in self.get_valid_moves(point):
-        #             if(minDist < self.calculate_line(move[0], move[1])):
-        #                 minDist = self.calculate_line(move[0], move[1])
-        #         distance = minDist
-        #         sumLineSquare += distance**2
-        #     return sumLineSquare
-        #
-        # if(player == 'g'):
-        #     for point in self.green[0]:
-        #         distance = self.calculate_line(point[0], point[1])
-        #         sumLineSquare = distance ** 2
-        #     return sumLineSquare
-        # else:
-        #     print("Invalid Player")
-
 
     def distToGoal(self, player):
         if (player == 'r'):
